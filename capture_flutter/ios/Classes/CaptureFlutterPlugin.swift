@@ -33,7 +33,7 @@ public class CaptureFlutterPlugin: NSObject, FlutterPlugin {
                             let captureVC = MBICCaptureViewController(captureSettings: settings)
                             captureVC.delegate = self
                             captureVC.modalPresentationStyle = .fullScreen
-                            let rootVc = UIApplication.shared.keyWindow?.rootViewController
+                            let rootVc = UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController
                             rootVc?.present(captureVC, animated: true)
                         }
                     }

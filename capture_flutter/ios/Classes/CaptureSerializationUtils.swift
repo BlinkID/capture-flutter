@@ -22,7 +22,7 @@ class CaptureSerializationUtils {
         captureSecondSideDict["nativeCapturedImage"] = self.encodeImage(analyzerResult.secondCapture?.capturedImage?.image)
         captureSecondSideDict["nativeTransformedImage"] = self.encodeImage(analyzerResult.secondCapture?.transformedImage?.image)
         captureSecondSideDict["nativeSide"] = analyzerResult.secondCapture?.side.rawValue
-        captureSecondSideDict["ativeDpiAdjusted"] = analyzerResult.secondCapture?.dpiAdjusted
+        captureSecondSideDict["nativeDpiAdjusted"] = analyzerResult.secondCapture?.dpiAdjusted
         
         dict["nativeSecondCapture"] = captureSecondSideDict
         dict["nativeDocumentGroup"] = analyzerResult.documentGroup.rawValue
