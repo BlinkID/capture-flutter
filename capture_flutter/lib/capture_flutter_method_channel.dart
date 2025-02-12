@@ -9,16 +9,10 @@ class MethodChannelCaptureFlutter extends CaptureFlutterPlatform {
   @visibleForTesting
   static const methodChannel = const MethodChannel('capture_flutter');
 
-  // @override
-  // static Future<String?> getPlatformVersion() async {
-  //const version =
-  //    await methodChannel.invokeMethod<String>('getPlatformVersion');
-//    return "version";
-//  }
-
   static Future<AnalyzerResult?> scanWithCamera() async {
-    final analyzerResult =
-        await methodChannel.invokeMethod<AnalyzerResult>('scanWithCamera');
-    return analyzerResult;
+    final analyzerResult = await methodChannel
+        .invokeMethod<Map<Object?, Object?>>('scanWithCamera');
+    final nativeAnalyzerResult = Map<String, dynamic>.from(analyzerResult!);
+    return AnalyzerResult(nativeAnalyzerResult);
   }
 }
