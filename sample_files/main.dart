@@ -1,3 +1,4 @@
+import 'package:capture_flutter/CaptureSettings.dart';
 import 'package:flutter/material.dart';
 import "dart:convert";
 import "dart:async";
@@ -22,19 +23,53 @@ class _MyAppState extends State<MyApp> {
   Uint8List? secondTransformedImage;
 
   Future<void> scan() async {
-    var results = await MethodChannelCaptureFlutter.scanWithCamera();
+    try {
+      // setup Capture settings
+      final settings = CaptureSettings();
 
-    if (results?.completnessStatus != CompletnessStatus.Empty) {
-      setState(() {
-        firstCapturedImage =
-            base64Decode(getImage(results?.firstCapture?.capturedImage));
-        firstTransformedImage =
-            base64Decode(getImage(results?.firstCapture?.transformedImage));
-        secondCapturedImage =
-            base64Decode(getImage(results?.secondCapture?.capturedImage));
-        secondTransformedImage =
-            base64Decode(getImage(results?.secondCapture?.transformedImage));
-      });
+      // modify UX settings
+      settings.uxSettings?.showOnboardingInfo = true;
+      settings.uxSettings?.showIntroductionDialog = true;
+      settings.uxSettings?.showHelpTooltipTimeIntervalMs = 2000;
+
+      // modify Analyzer settings
+      settings.analyzerSettings?.captureStrategy = CaptureStrategy.Default;
+      settings.analyzerSettings?.documentFramingMargin = 0.3;
+      settings.analyzerSettings?.keepMarginOnTransformedDocumentImage = true;
+      settings.analyzerSettings?.enforcedDocumentGroup =
+          EnforcedDocumentGroup.Id;
+      settings.analyzerSettings?.lightingThresholds.tooBrightThreshold = 0.99;
+      settings.analyzerSettings?.lightingThresholds.tooDarkThreshold = 0.99;
+
+      // modify Camera settings
+      // settings.cameraSettings?.cameraResolution =
+      // CameraResolution.RESOLUTION_1080_P;
+
+      // add the license key
+      const licenseKey =
+          "sRwCABVjb20ubWljcm9ibGluay5zYW1wbGUBbGV5SkRjbVZoZEdWa1QyNGlPakUzTXprek56UXdNRFl4TkRZc0lrTnlaV0YwWldSR2IzSWlPaUprWkdRd05qWmxaaTAxT0RJekxUUXdNRGd0T1RRNE1DMDFORFU0WWpBeFlUVTJZamdpZlE9PVyRo/fMJzpMKHViG4GWa1iSirSGrTw11h21H9wLUUNyCMY4xwFVRwRT/iYkk/hAVe5SdUg51YahxV9qkzRLg5IPb/3XtrmAdlhRGMfhENSIkOEOyoVWO4IsmzYuY2g=";
+
+      var results = await MethodChannelCaptureFlutter.scanWithCamera(
+          settings, licenseKey);
+
+      if (results?.completnessStatus != CompletnessStatus.Empty) {
+        setState(() {
+          firstCapturedImage =
+              base64Decode(getImage(results?.firstCapture?.capturedImage));
+          firstTransformedImage =
+              base64Decode(getImage(results?.firstCapture?.transformedImage));
+          secondCapturedImage =
+              base64Decode(getImage(results?.secondCapture?.capturedImage));
+          secondTransformedImage =
+              base64Decode(getImage(results?.secondCapture?.transformedImage));
+        });
+      }
+    } catch (captureError) {
+      if (captureError is PlatformException) {
+        setState(() {
+          showAlert(context, captureError.code, captureError.message!);
+        });
+      }
     }
   }
 
@@ -43,6 +78,26 @@ class _MyAppState extends State<MyApp> {
       return base64Image;
     }
     return "";
+  }
+
+  void showAlert(BuildContext context, String title, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
