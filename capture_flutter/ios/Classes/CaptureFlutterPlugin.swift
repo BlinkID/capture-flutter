@@ -4,6 +4,7 @@ import CaptureUX
 
 public class CaptureFlutterPlugin: NSObject, FlutterPlugin {
     var captureSettings: MBICCaptureSettings?
+    var result: FlutterResult?
     
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "capture_flutter", binaryMessenger: registrar.messenger())
@@ -16,6 +17,7 @@ public class CaptureFlutterPlugin: NSObject, FlutterPlugin {
     case "getPlatformVersion":
       result("iOS " + UIDevice.current.systemVersion)
     case "scanWithCamera":
+        self.result = result
         scanWithCamera()
     default:
       result(FlutterMethodNotImplemented)
@@ -40,7 +42,7 @@ public class CaptureFlutterPlugin: NSObject, FlutterPlugin {
           MBCCCaptureCoreSDK.shared().setLicenseKey("license-key") { captureLicenseKeyError in
               switch captureLicenseKeyError {
               case .networkRequired:
-                  print("Network required")
+                  self.result!(FlutterError(code: "", message: "Network required!", details: nil))
               case .unableToDoRemoteLicenceCheck:
                   print("unableToDoRemoteLicenceCheck")
               case .licenseIsLocked:
@@ -66,6 +68,14 @@ public class CaptureFlutterPlugin: NSObject, FlutterPlugin {
 
 extension CaptureFlutterPlugin: MBICCaptureViewControllerDelegate {
     public func captureViewController(captureViewController: MBICCaptureViewController, didFinishCaptureWithResult analyzerResult: MBCCAnalyzerResult) {
-        print(analyzerResult.description)
+        if let result = result {
+            result(CaptureSerializationUtils.serializeResult(analyzerResult))
+        }
+        
+        DispatchQueue.main.async {
+            captureViewController.dismiss(animated: true)
+        }
     }
+    
+
 }
