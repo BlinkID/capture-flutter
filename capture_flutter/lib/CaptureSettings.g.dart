@@ -139,16 +139,26 @@ Map<String, dynamic> _$UxSettingsToJson(UxSettings instance) =>
 
 CameraSettings _$CameraSettingsFromJson(Map<String, dynamic> json) =>
     CameraSettings()
-      ..cameraResolution =
-          $enumDecode(_$CameraResolutionEnumMap, json['cameraResolution']);
+      ..androidCameraResolution = $enumDecode(
+          _$AndroidCameraResolutionEnumMap, json['androidCameraResolution'])
+      ..iosCameraResolution = $enumDecode(
+          _$IosCameraResolutionEnumMap, json['iosCameraResolution']);
 
 Map<String, dynamic> _$CameraSettingsToJson(CameraSettings instance) =>
     <String, dynamic>{
-      'cameraResolution': _$CameraResolutionEnumMap[instance.cameraResolution]!,
+      'androidCameraResolution':
+          _$AndroidCameraResolutionEnumMap[instance.androidCameraResolution]!,
+      'iosCameraResolution':
+          _$IosCameraResolutionEnumMap[instance.iosCameraResolution]!,
     };
 
-const _$CameraResolutionEnumMap = {
-  CameraResolution.RESOLUTION_1080_P: 0,
-  CameraResolution.RESOLUTION_2160_P: 1,
-  CameraResolution.RESOLUTION_4320_P: 2,
+const _$AndroidCameraResolutionEnumMap = {
+  AndroidCameraResolution.Resolution1080P: 0,
+  AndroidCameraResolution.Resolution2160P: 1,
+  AndroidCameraResolution.Resolution4320P: 2,
+};
+
+const _$IosCameraResolutionEnumMap = {
+  IosCameraResolution.Resolution1080p: 0,
+  IosCameraResolution.Resolution4K: 1,
 };

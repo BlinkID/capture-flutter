@@ -136,7 +136,7 @@ class CaptureSerializationUtils {
     
     static func deserializeCaptureCameraSettings(_ captureCameraSettingsDict: Dictionary<String, Any>) -> MBICCameraSettings {
         let cameraSettings = MBICCameraSettings()
-        if let cameraResolution = captureCameraSettingsDict["cameraResolution"] as? Int {
+        if let cameraResolution = captureCameraSettingsDict["iosCameraResolution"] as? Int {
             if let value = MBICCameraSettingsCameraResolution(rawValue: cameraResolution) {
                 cameraSettings.cameraResolution = value
             }

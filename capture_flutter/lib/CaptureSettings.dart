@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'package:json_annotation/json_annotation.dart';
 import 'CaptureEnums.dart';
 
@@ -72,7 +71,9 @@ class UxSettings {
 
 @JsonSerializable()
 class CameraSettings {
-  CameraResolution cameraResolution = CameraResolution.RESOLUTION_2160_P;
+  AndroidCameraResolution androidCameraResolution =
+      AndroidCameraResolution.Resolution2160P;
+  IosCameraResolution iosCameraResolution = IosCameraResolution.Resolution1080p;
 
   CameraSettings();
 
