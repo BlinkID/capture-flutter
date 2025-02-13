@@ -115,13 +115,21 @@ enum EnforcedDocumentGroup {
   Visa
 }
 
-enum CameraResolution {
+enum AndroidCameraResolution {
   @JsonValue(0)
-  RESOLUTION_1080_P,
+  Resolution1080P,
 
   @JsonValue(1)
-  RESOLUTION_2160_P,
+  Resolution2160P,
 
   @JsonValue(2)
-  RESOLUTION_4320_P
+  Resolution4320P
+}
+
+enum IosCameraResolution {
+  @JsonValue(0)
+  Resolution1080p,
+
+  @JsonValue(1)
+  Resolution4K
 }
