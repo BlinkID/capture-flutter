@@ -42,16 +42,17 @@ class _MyAppState extends State<MyApp> {
       settings.analyzerSettings?.lightingThresholds.tooDarkThreshold = 0.99;
 
       // modify Camera settings
-      // settings.cameraSettings?.cameraResolution =
-      // CameraResolution.RESOLUTION_1080_P;
+      settings.cameraSettings?.iosCameraResolution =
+          IosCameraResolution.Resolution4K;
 
       // add the license key
       const licenseKey =
           "sRwCABVjb20ubWljcm9ibGluay5zYW1wbGUBbGV5SkRjbVZoZEdWa1QyNGlPakUzTXprek56UXdNRFl4TkRZc0lrTnlaV0YwWldSR2IzSWlPaUprWkdRd05qWmxaaTAxT0RJekxUUXdNRGd0T1RRNE1DMDFORFU0WWpBeFlUVTJZamdpZlE9PVyRo/fMJzpMKHViG4GWa1iSirSGrTw11h21H9wLUUNyCMY4xwFVRwRT/iYkk/hAVe5SdUg51YahxV9qkzRLg5IPb/3XtrmAdlhRGMfhENSIkOEOyoVWO4IsmzYuY2g=";
 
+      // add the license key and the Capture settings in the scanWithCamera method
       var results = await MethodChannelCaptureFlutter.scanWithCamera(
           settings, licenseKey);
-
+      // get the results
       if (results?.completnessStatus != CompletnessStatus.Empty) {
         setState(() {
           firstCapturedImage =
