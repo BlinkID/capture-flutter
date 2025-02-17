@@ -24,13 +24,18 @@ class MethodChannelCaptureFlutter extends CaptureFlutterPlatform {
     //final analyzerResult = await methodChannel
     //    .invokeMethod<Map<Object?, Object?>>('scanWithCamera');
     //final nativeAnalyzerResult = Map<String, dynamic>.from(analyzerResult!);
-    final jsonAnalyzerResults =
-        await methodChannel.invokeMethod(METHOD_SCAN_WITH_CAMERA, {
-      ARG_CAPTURE_SETTINGS: jsonDecode(jsonEncode(captureSettings)),
-      ARG_LICENSE: {ARG_LICENSE_KEY: license}
-    });
+    try {
+      final jsonAnalyzerResults =
+          await methodChannel.invokeMethod(METHOD_SCAN_WITH_CAMERA, {
+        ARG_CAPTURE_SETTINGS: jsonDecode(jsonEncode(captureSettings)),
+        ARG_LICENSE: {ARG_LICENSE_KEY: license}
+      });
 
-    final nativeAnalyzerResult = Map<String, dynamic>.from(jsonAnalyzerResults);
-    return AnalyzerResult(nativeAnalyzerResult);
+      final nativeAnalyzerResult = jsonDecode(jsonAnalyzerResults);
+      return AnalyzerResult(Map<String, dynamic>.from(nativeAnalyzerResult));
+    } catch (error) {
+      print("Captured the error: $error");
+    }
+    return null;
   }
 }

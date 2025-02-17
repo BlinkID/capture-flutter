@@ -8,7 +8,7 @@
 import CaptureUX
 
 class CaptureSerializationUtils {
-    static func serializeResult(_ analyzerResult: MBCCAnalyzerResult) -> Dictionary<String, Any>  {
+    static func serializeResult(_ analyzerResult: MBCCAnalyzerResult) -> String?  {
         var dict = Dictionary<String, Any>()
         var captureFirstSideDict = Dictionary<String, Any>()
         captureFirstSideDict["nativeCapturedImage"] = self.encodeImage(analyzerResult.firstCapture?.capturedImage?.image)
@@ -27,7 +27,8 @@ class CaptureSerializationUtils {
         dict["nativeSecondCapture"] = captureSecondSideDict
         dict["nativeDocumentGroup"] = analyzerResult.documentGroup.rawValue
         dict["nativeCompletnessStatus"] = analyzerResult.completnessStatus.rawValue
-        return dict
+        
+        return self.encodeToJson(dict)
     }
     
     static func encodeImage(_ image: UIImage?) -> String? {
@@ -37,7 +38,19 @@ class CaptureSerializationUtils {
         return ""
     }
     
-    static func deserializeLicenseKey(_ licenseKeyDict: Dictionary<String, String>?) { }
+    static func encodeToJson(_ resultDict: Dictionary<String, Any>) -> String? {
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: resultDict, options: .prettyPrinted)
+            return String(data:jsonData, encoding: .utf8)
+        } catch {
+            print(error)
+        }
+        return nil
+    }
+    
+    static func deserializeLicenseKey(_ licenseKeyDict: Dictionary<String, String>?) {
+        
+    }
     
     static func deserializeCaptureSettings(_ captureSettingsDict: Dictionary<String, Any>) -> MBICCaptureSettings {
         let captureSettings = MBICCaptureSettings()
