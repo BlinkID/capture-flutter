@@ -46,39 +46,56 @@ class _MyAppState extends State<MyApp> {
           IosCameraResolution.Resolution4K;
 
       // add the license key
-      const licenseKey =
-          "sRwCABVjb20ubWljcm9ibGluay5zYW1wbGUBbGV5SkRjbVZoZEdWa1QyNGlPakUzTXprek56UXdNRFl4TkRZc0lrTnlaV0YwWldSR2IzSWlPaUprWkdRd05qWmxaaTAxT0RJekxUUXdNRGd0T1RRNE1DMDFORFU0WWpBeFlUVTJZamdpZlE9PVyRo/fMJzpMKHViG4GWa1iSirSGrTw11h21H9wLUUNyCMY4xwFVRwRT/iYkk/hAVe5SdUg51YahxV9qkzRLg5IPb/3XtrmAdlhRGMfhENSIkOEOyoVWO4IsmzYuY2g=";
-
+      var licenseKey = "";
+      if (Theme.of(context).platform == TargetPlatform.iOS) {
+        licenseKey =
+            "sRwCABVjb20ubWljcm9ibGluay5zYW1wbGUBbGV5SkRjbVZoZEdWa1QyNGlPakUzTXprek56UXdNRFl4TkRZc0lrTnlaV0YwWldSR2IzSWlPaUprWkdRd05qWmxaaTAxT0RJekxUUXdNRGd0T1RRNE1DMDFORFU0WWpBeFlUVTJZamdpZlE9PVyRo/fMJzpMKHViG4GWa1iSirSGrTw11h21H9wLUUNyCMY4xwFVRwRT/iYkk/hAVe5SdUg51YahxV9qkzRLg5IPb/3XtrmAdlhRGMfhENSIkOEOyoVWO4IsmzYuY2g=";
+      } else if (Theme.of(context).platform == TargetPlatform.android) {
+        licenseKey =
+            'sRwCABVjb20ubWljcm9ibGluay5zYW1wbGUAbGV5SkRjbVZoZEdWa1QyNGlPakUzTXprMU1qZ3pPRE14TWpNc0lrTnlaV0YwWldSR2IzSWlPaUprWkdRd05qWmxaaTAxT0RJekxUUXdNRGd0T1RRNE1DMDFORFU0WWpBeFlUVTJZamdpZlE9PXUNwFYL3KiIFimEF74euSD7BFdYifhniKxgQtOvgSVsgSYaMY5zXE/LuD3nnaYmn9x7s+lLITCzAb6LOwET5Q6kuu0B3zfdItakTgq2kBU07v2MrCnPk6g9wIY6nQw=';
+      } else {
+        licenseKey = "";
+      }
       // add the license key and the Capture settings in the scanWithCamera method
       var results = await MethodChannelCaptureFlutter.scanWithCamera(
           settings, licenseKey);
+
       // get the results
       if (results?.completnessStatus != CompletnessStatus.Empty) {
         setState(() {
-          firstCapturedImage =
-              base64Decode(getImage(results?.firstCapture?.capturedImage));
-          firstTransformedImage =
-              base64Decode(getImage(results?.firstCapture?.transformedImage));
-          secondCapturedImage =
-              base64Decode(getImage(results?.secondCapture?.capturedImage));
-          secondTransformedImage =
-              base64Decode(getImage(results?.secondCapture?.transformedImage));
+          try {
+            firstCapturedImage =
+                base64Decode(getImage(results?.firstCapture?.capturedImage));
+            firstTransformedImage =
+                base64Decode(getImage(results?.firstCapture?.transformedImage));
+
+            if (results?.completnessStatus !=
+                CompletnessStatus.OneSideMissing) {
+              secondCapturedImage =
+                  base64Decode(getImage(results?.secondCapture?.capturedImage));
+              secondTransformedImage = base64Decode(
+                  getImage(results?.secondCapture?.transformedImage));
+            }
+          } catch (error) {
+            print("issue with image decode: $error");
+          }
         });
       }
     } catch (captureError) {
       if (captureError is PlatformException) {
-        setState(() {
-          showAlert(context, captureError.code, captureError.message!);
-        });
+        print("Capture error: ");
+        print(captureError.message);
+        setState(() {});
       }
     }
   }
 
-  String getImage(String? base64Image) {
-    if (base64Image != null) {
-      return base64Image;
+  String getImage(String? base64String) {
+    if (base64String == null || base64String.isEmpty) {
+      return "";
     }
-    return "";
+    final cleanedBase64 = base64String.replaceAll(RegExp(r'\s'), '');
+    return cleanedBase64;
   }
 
   void showAlert(BuildContext context, String title, String message) {
@@ -91,7 +108,7 @@ class _MyAppState extends State<MyApp> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
+                Navigator.of(context).pop();
               },
               child: Text("OK"),
             ),
