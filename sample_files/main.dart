@@ -130,33 +130,33 @@ class _MyAppState extends State<MyApp> {
           title: const Text("Capture Sample"),
         ),
         body: SingleChildScrollView(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             children: <Widget>[
               Center(
                 child: Padding(
-                  padding: EdgeInsets.only(bottom: 16.0),
+                  padding: const EdgeInsets.only(bottom: 16.0),
                   child: ElevatedButton(
                     onPressed: scan,
-                    child: Text("Scan with camera"),
+                    child: const Text("Scan with camera"),
                   ),
                 ),
               ),
               Text(resultString),
               if (firstCapturedImage != null) ...[
-                Text("First Capture - Captured Image"),
+                const Text("First Capture - Captured Image"),
                 Image.memory(firstCapturedImage!),
               ],
               if (firstTransformedImage != null) ...[
-                Text("First Capture - Transformed Image"),
+                const Text("First Capture - Transformed Image"),
                 Image.memory(firstTransformedImage!),
               ],
               if (secondCapturedImage != null) ...[
-                Text("Second Capture - Captured Image"),
+                const Text("Second Capture - Captured Image"),
                 Image.memory(secondCapturedImage!),
               ],
               if (secondTransformedImage != null) ...[
-                Text("Second Capture - Transformed Image"),
+                const Text("Second Capture - Transformed Image"),
                 Image.memory(secondTransformedImage!),
               ],
             ],
