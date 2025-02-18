@@ -6,21 +6,21 @@ public class CaptureFlutterPlugin: NSObject, FlutterPlugin {
     var result: FlutterResult?
     let iosLicenseKeyError = "CaptureiOSLicenseError"
     
-  public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "capture_flutter", binaryMessenger: registrar.messenger())
-    let instance = CaptureFlutterPlugin()
-    registrar.addMethodCallDelegate(instance, channel: channel)
-  }
-
-  public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    switch call.method {
-    case "scanWithCamera":
-        self.result = result
-        scanWithCamera(call)
-    default:
-      result(FlutterMethodNotImplemented)
+    public static func register(with registrar: FlutterPluginRegistrar) {
+        let channel = FlutterMethodChannel(name: "capture_flutter", binaryMessenger: registrar.messenger())
+        let instance = CaptureFlutterPlugin()
+        registrar.addMethodCallDelegate(instance, channel: channel)
     }
-  }
+
+    public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        switch call.method {
+        case "scanWithCamera":
+            self.result = result
+            scanWithCamera(call)
+        default:
+            result(FlutterMethodNotImplemented)
+        }
+    }
     
     public func scanWithCamera(_ call: FlutterMethodCall) {
         if let args = call.arguments as? Dictionary<String, Any> {
@@ -33,6 +33,8 @@ public class CaptureFlutterPlugin: NSObject, FlutterPlugin {
                         captureVC.modalPresentationStyle = .fullScreen
                         let rootVc = UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController
                         rootVc?.present(captureVC, animated: true)
+                    } else {
+                        self.result!(FlutterError(code: "CaptureiOSError", message: "Incorrectly set Capture Settings!", details: nil))
                     }
                 } else {
                     self.result!(FlutterError(code: iosLicenseKeyError, message: licenseErrorString, details: nil))

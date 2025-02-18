@@ -87,34 +87,31 @@ class CaptureSerializationUtils {
     
     static func deserializeCaptureAnalyzerSettings(_ captureAnalyzerSettingsDict: Dictionary<String, Any>) -> MBCCAnalyzerSettings {
         let analyzerSettings = MBCCAnalyzerSettings()
+        
         if let adjustMinimumDocumentDpi = captureAnalyzerSettingsDict["adjustMinimumDocumentDpi"] as? Bool {
             analyzerSettings.adjustMinimumDocumentDpi = adjustMinimumDocumentDpi
         }
-        if let blurPolicy = captureAnalyzerSettingsDict["blurPolicy"] as? Int {
-            if let value = MBCCBlurPolicy(rawValue: blurPolicy) {
-                analyzerSettings.blurPolicy = value
-            }
+        if let blurPolicy = captureAnalyzerSettingsDict["blurPolicy"] as? Int,
+            let blurPolicyValue = MBCCBlurPolicy(rawValue: blurPolicy) {
+                analyzerSettings.blurPolicy = blurPolicyValue
         }
         if let captureSingleSide = captureAnalyzerSettingsDict["captureSingleSide"] as? Bool {
             analyzerSettings.captureSingleSide = captureSingleSide
         }
-        if let captureStrategy = captureAnalyzerSettingsDict["captureStrategy"] as? Int {
-            if let value = MBCCCaptureStrategy(rawValue: captureStrategy) {
-                analyzerSettings.captureStrategy = value
-            }
+        if let captureStrategy = captureAnalyzerSettingsDict["captureStrategy"] as? Int,
+            let captureStrategyValue = MBCCCaptureStrategy(rawValue: captureStrategy) {
+                analyzerSettings.captureStrategy = captureStrategyValue
         }
         if let documentFramingMargin = captureAnalyzerSettingsDict["documentFramingMargin"] as? Double {
             analyzerSettings.documentFramingMargin = documentFramingMargin
         }
-        if let enforcedDocumentGroup = captureAnalyzerSettingsDict["enforcedDocumentGroup"] as? Int {
-            if let value = MBCCEnforcedDocumentGroup(rawValue: enforcedDocumentGroup) {
-                analyzerSettings.enforcedDocumentGroup = value
-            }
+        if let enforcedDocumentGroup = captureAnalyzerSettingsDict["enforcedDocumentGroup"] as? Int,
+            let enforcedDocumentGroupValue = MBCCEnforcedDocumentGroup(rawValue: enforcedDocumentGroup) {
+                analyzerSettings.enforcedDocumentGroup = enforcedDocumentGroupValue
         }
-        if let glarePolicy = captureAnalyzerSettingsDict["glarePolicy"] as? Int {
-            if let value = MBCCGlarePolicy(rawValue: glarePolicy) {
-                analyzerSettings.glarePolicy = value
-            }
+        if let glarePolicy = captureAnalyzerSettingsDict["glarePolicy"] as? Int,
+            let glarePolicyValue = MBCCGlarePolicy(rawValue: glarePolicy) {
+                analyzerSettings.glarePolicy = glarePolicyValue
         }
         if let handOcclusionThreshold = captureAnalyzerSettingsDict["handOcclusionThreshold"] as? Double {
             analyzerSettings.handOcclusionThreshold = handOcclusionThreshold
@@ -125,11 +122,10 @@ class CaptureSerializationUtils {
         if let keepMarginOnTransformedDocumentImage = captureAnalyzerSettingsDict["keepMarginOnTransformedDocumentImage"] as? Bool {
             analyzerSettings.keepMarginOnTransformedDocumentImage = keepMarginOnTransformedDocumentImage
         }
-        if let lightingThresholds = captureAnalyzerSettingsDict["lightingThresholds"] as? Dictionary<String, Any> {
-            if let tooDarkTreshold = lightingThresholds["tooDarkTreshold"] as? Double,
-               let tooBrightThreshold = lightingThresholds["tooBrightThreshold"] as? Double {
+        if let lightingThresholds = captureAnalyzerSettingsDict["lightingThresholds"] as? Dictionary<String, Any>,
+            let tooDarkTreshold = lightingThresholds["tooDarkTreshold"] as? Double,
+            let tooBrightThreshold = lightingThresholds["tooBrightThreshold"] as? Double  {
                 analyzerSettings.lightingThresholds = MBCCLightingThresholds(tooDarkTreshold: tooDarkTreshold, tooBrightThreshold: tooBrightThreshold)
-            }
         }
         if let minimumDocumentDpi = captureAnalyzerSettingsDict["minimumDocumentDpi"] as? Int {
             analyzerSettings.minimumDocumentDpi = minimumDocumentDpi
@@ -137,10 +133,9 @@ class CaptureSerializationUtils {
         if let returnTransformedDocumentImage = captureAnalyzerSettingsDict["returnTransformedDocumentImage"] as? Bool {
             analyzerSettings.returnTransformedDocumentImage = returnTransformedDocumentImage
         }
-        if let tiltPolicy = captureAnalyzerSettingsDict["tiltPolicy"] as? Int {
-            if let value = MBCCTiltPolicy(rawValue: tiltPolicy) {
-                analyzerSettings.tiltPolicy = value
-            }
+        if let tiltPolicy = captureAnalyzerSettingsDict["tiltPolicy"] as? Int,
+           let tiltPolicyValue = MBCCTiltPolicy(rawValue: tiltPolicy) {
+            analyzerSettings.tiltPolicy = tiltPolicyValue
         }
         return analyzerSettings
     }
