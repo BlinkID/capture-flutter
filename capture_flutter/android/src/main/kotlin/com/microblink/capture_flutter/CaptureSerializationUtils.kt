@@ -54,7 +54,7 @@ class CaptureSerializationUtils {
                 captureStrategy = CaptureStrategy.values()[jsonAnalyzerSettings.optInt("captureStrategy", 2)],
                 captureSingleSide = jsonAnalyzerSettings.optBoolean("captureSingleSide", false),
                 documentFramingMargin = jsonAnalyzerSettings.optDouble("documentFramingMargin", 0.01).toFloat(),
-                enforcedDocumentGroup = EnforcedDocumentGroup.values()[jsonAnalyzerSettings.optInt("enforcedDocumentGroup")],
+                enforcedDocumentGroup = (if (jsonAnalyzerSettings.isNull("enforcedDocumentGroup")) null else EnforcedDocumentGroup.values()[jsonAnalyzerSettings.optInt("enforcedDocumentGroup")]),
                 glarePolicy = GlarePolicy.values()[jsonAnalyzerSettings.optInt("glarePolicy", 2)],
                 handOcclusionThreshold = jsonAnalyzerSettings.optDouble("handOcclusionThreshold", 0.05).toFloat(),
                 keepDpiOnTransformedDocumentImage = jsonAnalyzerSettings.optBoolean("keepDpiOnTransformedDocumentImage", false),
@@ -63,7 +63,7 @@ class CaptureSerializationUtils {
                     tooDarkThreshold = jsonAnalyzerSettings.optJSONObject("lightingThresholds").optDouble("tooDarkTreshold", 0.99).toFloat(),
                     tooBrightThreshold = jsonAnalyzerSettings.optJSONObject("lightingThresholds").optDouble("tooBrightThreshold", 0.99).toFloat(),
                 ),
-                minimumDocumentDpi = jsonAnalyzerSettings.optInt("minimumDocumentDpi", 250),
+                minimumDocumentDpi = jsonAnalyzerSettings.optInt("minimumDocumentDpi", 230),
                 returnTransformedDocumentImage = jsonAnalyzerSettings.optBoolean("returnTransformedDocumentImage", true),
                 tiltPolicy = TiltPolicy.values()[jsonAnalyzerSettings.optInt("tiltPolicy", 2)]
             ),

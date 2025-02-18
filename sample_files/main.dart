@@ -1,13 +1,11 @@
-import 'package:capture_flutter/CaptureAnalyzerResult.dart';
-import 'package:capture_flutter/CaptureSettings.dart';
-import 'package:capture_flutter/capture_flutter.dart';
 import 'package:flutter/material.dart';
 import "dart:convert";
 import "dart:async";
 import 'package:flutter/services.dart';
-import 'package:capture_flutter/capture_flutter_method_channel.dart';
-import 'dart:typed_data';
-import 'package:capture_flutter/CaptureEnums.dart';
+import 'package:capture_flutter/capture_flutter.dart';
+import 'package:capture_flutter/capture_settings.dart';
+import 'package:capture_flutter/capture_enums.dart';
+import 'package:capture_flutter/capture_analyzer_result.dart';
 
 void main() {
   runApp(MyApp());
@@ -79,6 +77,9 @@ class _MyAppState extends State<MyApp> {
                 base64Decode(getImage(results?.secondCapture?.capturedImage));
             secondTransformedImage = base64Decode(
                 getImage(results?.secondCapture?.transformedImage));
+          } else {
+            secondCapturedImage = null;
+            secondTransformedImage = null;
           }
         });
       }
