@@ -155,6 +155,13 @@ class CaptureSerializationUtils {
         if let sideCaptureTimeoutMs = captureUxSettingsDict["sideCaptureTimeoutMs"] as? Double {
             uxSettings.sideCaptureTimeout = sideCaptureTimeoutMs / 1000
         }
+        if let keepScreenOn = captureUxSettingsDict["keepScreenOn"] as? Bool {
+            uxSettings.isIdleTimerDisabled = keepScreenOn
+        }
+        if let showCaptureHelpTooltip = captureUxSettingsDict["showCaptureHelpTooltip"] as? Bool {
+            uxSettings.showCaptureHelpTooltip = showCaptureHelpTooltip
+        }
+        
         return uxSettings
     }
     

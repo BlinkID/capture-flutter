@@ -49,32 +49,33 @@ class CaptureSerializationUtils {
 
         return CaptureSettings(
             analyzerSettings = AnalyzerSettings(
-                adjustMinimumDocumentDpi = jsonAnalyzerSettings.optBoolean("adjustMinimumDocumentDpi"),
-                blurPolicy = BlurPolicy.values()[jsonAnalyzerSettings.optInt("blurPolicy")],
-                captureStrategy = CaptureStrategy.values()[jsonAnalyzerSettings.optInt("captureStrategy")],
-                captureSingleSide = jsonAnalyzerSettings.optBoolean("captureSingleSide"),
-                documentFramingMargin = jsonAnalyzerSettings.optDouble("documentFramingMargin").toFloat(),
+                adjustMinimumDocumentDpi = jsonAnalyzerSettings.optBoolean("adjustMinimumDocumentDpi", true),
+                blurPolicy = BlurPolicy.values()[jsonAnalyzerSettings.optInt("blurPolicy", 2)],
+                captureStrategy = CaptureStrategy.values()[jsonAnalyzerSettings.optInt("captureStrategy", 2)],
+                captureSingleSide = jsonAnalyzerSettings.optBoolean("captureSingleSide", false),
+                documentFramingMargin = jsonAnalyzerSettings.optDouble("documentFramingMargin", 0.01).toFloat(),
                 enforcedDocumentGroup = EnforcedDocumentGroup.values()[jsonAnalyzerSettings.optInt("enforcedDocumentGroup")],
-                glarePolicy = GlarePolicy.values()[jsonAnalyzerSettings.optInt("glarePolicy")],
-                handOcclusionThreshold = jsonAnalyzerSettings.optDouble("handOcclusionThreshold").toFloat(),
-                keepDpiOnTransformedDocumentImage = jsonAnalyzerSettings.optBoolean("keepDpiOnTransformedDocumentImage"),
-                keepMarginOnTransformedDocumentImage = jsonCaptureSettings.optBoolean("keepMarginOnTransformedDocumentImage"),
+                glarePolicy = GlarePolicy.values()[jsonAnalyzerSettings.optInt("glarePolicy", 2)],
+                handOcclusionThreshold = jsonAnalyzerSettings.optDouble("handOcclusionThreshold", 0.05).toFloat(),
+                keepDpiOnTransformedDocumentImage = jsonAnalyzerSettings.optBoolean("keepDpiOnTransformedDocumentImage", false),
+                keepMarginOnTransformedDocumentImage = jsonCaptureSettings.optBoolean("keepMarginOnTransformedDocumentImage", false),
                 lightingThresholds = LightingThresholds(
-                    tooDarkThreshold = jsonAnalyzerSettings.optJSONObject("lightingThresholds").optDouble("tooDarkTreshold").toFloat(),
-                    tooBrightThreshold = jsonAnalyzerSettings.optJSONObject("lightingThresholds").optDouble("tooBrightThreshold").toFloat(),
+                    tooDarkThreshold = jsonAnalyzerSettings.optJSONObject("lightingThresholds").optDouble("tooDarkTreshold", 0.99).toFloat(),
+                    tooBrightThreshold = jsonAnalyzerSettings.optJSONObject("lightingThresholds").optDouble("tooBrightThreshold", 0.99).toFloat(),
                 ),
-                minimumDocumentDpi = jsonAnalyzerSettings.optInt("minimumDocumentDpi"),
-                returnTransformedDocumentImage = jsonAnalyzerSettings.optBoolean("returnTransformedDocumentImage"),
-                tiltPolicy = TiltPolicy.values()[jsonAnalyzerSettings.optInt("tiltPolicy")]
+                minimumDocumentDpi = jsonAnalyzerSettings.optInt("minimumDocumentDpi", 250),
+                returnTransformedDocumentImage = jsonAnalyzerSettings.optBoolean("returnTransformedDocumentImage", true),
+                tiltPolicy = TiltPolicy.values()[jsonAnalyzerSettings.optInt("tiltPolicy", 2)]
             ),
             uxSettings = UxSettings(
-                showHelpTooltipTimeIntervalMs = jsonUxSettings.optDouble("showHelpTooltipTimeIntervalMs").toLong(),
-                showIntroductionDialog = jsonUxSettings.optBoolean("showIntroductionDialog"),
-                showOnboardingInfo = jsonUxSettings.optBoolean("showOnboardingInfo"),
-                sideCaptureTimeoutMs = jsonUxSettings.optDouble("sideCaptureTimeoutMs").toLong()
+                keepScreenOn = jsonUxSettings.optBoolean("keepScreenOn", true),
+                showHelpTooltipTimeIntervalMs = jsonUxSettings.optDouble("showHelpTooltipTimeIntervalMs",8000.0).toLong(),
+                showIntroductionDialog = jsonUxSettings.optBoolean("showIntroductionDialog", false),
+                showOnboardingInfo = jsonUxSettings.optBoolean("showOnboardingInfo", true),
+                sideCaptureTimeoutMs = jsonUxSettings.optDouble("sideCaptureTimeoutMs", 15000.0).toLong()
             ),
             cameraSettings = CameraSettings(
-                resolution = CameraSettings.Resolution.values()[jsonCameraSettings.optInt("resolution")],
+                resolution = CameraSettings.Resolution.values()[jsonCameraSettings.optInt("resolution", 0)],
             )
         )
     }
