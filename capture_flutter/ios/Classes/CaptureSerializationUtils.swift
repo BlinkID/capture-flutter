@@ -31,25 +31,42 @@ class CaptureSerializationUtils {
         return self.encodeToJson(dict)
     }
     
-    static func encodeImage(_ image: UIImage?) -> String? {
-        if let image = image {
-            return image.jpegData(compressionQuality: 1.0)?.base64EncodedString()
-        }
-        return ""
-    }
+    static func deserializeLicenseKey(_  licenseKeyDict: Dictionary<String, Any>) -> (Bool, String?) {
+        var errorString: String?
+        var isLicenseKeyValid = true
     
-    static func encodeToJson(_ resultDict: Dictionary<String, Any>) -> String? {
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: resultDict, options: .prettyPrinted)
-            return String(data:jsonData, encoding: .utf8)
-        } catch {
-            print(error)
+        if let licenseKey = licenseKeyDict["licenseKey"] as? String {
+            MBCCCaptureCoreSDK.shared().setLicenseKey(licenseKey) { captureLicenseKeyError in
+                isLicenseKeyValid = false
+                switch captureLicenseKeyError {
+                case .networkRequired:
+                    errorString = "Network required!"
+                case .unableToDoRemoteLicenceCheck:
+                    errorString = "Unable to do remote license check!"
+                case .licenseIsLocked:
+                    errorString = "The license key is locked!"
+                case .licenseCheckFailed:
+                    errorString = "License key check failed!"
+                case .invalidLicense:
+                    errorString = "Invalid license key!"
+                case .permissionExpired:
+                    errorString = "License key permission expired!"
+                case .payloadCorrupted:
+                    errorString = "License key payload corrupted!"
+                case .payloadSignatureVerificationFailed:
+                    errorString = "License key payload signature verification failed!"
+                case .incorrectTokenState:
+                    errorString = "Incorrect token state!"
+                @unknown default:
+                    errorString = "Unknown license key error!"
+                }
+            }
+        } else {
+            isLicenseKeyValid = false
+            errorString = "Invalid license key!"
         }
-        return nil
-    }
-    
-    static func deserializeLicenseKey(_ licenseKeyDict: Dictionary<String, String>?) {
         
+        return (isLicenseKeyValid,errorString)
     }
     
     static func deserializeCaptureSettings(_ captureSettingsDict: Dictionary<String, Any>) -> MBICCaptureSettings {
@@ -70,34 +87,31 @@ class CaptureSerializationUtils {
     
     static func deserializeCaptureAnalyzerSettings(_ captureAnalyzerSettingsDict: Dictionary<String, Any>) -> MBCCAnalyzerSettings {
         let analyzerSettings = MBCCAnalyzerSettings()
+        
         if let adjustMinimumDocumentDpi = captureAnalyzerSettingsDict["adjustMinimumDocumentDpi"] as? Bool {
             analyzerSettings.adjustMinimumDocumentDpi = adjustMinimumDocumentDpi
         }
-        if let blurPolicy = captureAnalyzerSettingsDict["blurPolicy"] as? Int {
-            if let value = MBCCBlurPolicy(rawValue: blurPolicy) {
-                analyzerSettings.blurPolicy = value
-            }
+        if let blurPolicy = captureAnalyzerSettingsDict["blurPolicy"] as? Int,
+            let blurPolicyValue = MBCCBlurPolicy(rawValue: blurPolicy) {
+                analyzerSettings.blurPolicy = blurPolicyValue
         }
         if let captureSingleSide = captureAnalyzerSettingsDict["captureSingleSide"] as? Bool {
             analyzerSettings.captureSingleSide = captureSingleSide
         }
-        if let captureStrategy = captureAnalyzerSettingsDict["captureStrategy"] as? Int {
-            if let value = MBCCCaptureStrategy(rawValue: captureStrategy) {
-                analyzerSettings.captureStrategy = value
-            }
+        if let captureStrategy = captureAnalyzerSettingsDict["captureStrategy"] as? Int,
+            let captureStrategyValue = MBCCCaptureStrategy(rawValue: captureStrategy) {
+                analyzerSettings.captureStrategy = captureStrategyValue
         }
         if let documentFramingMargin = captureAnalyzerSettingsDict["documentFramingMargin"] as? Double {
             analyzerSettings.documentFramingMargin = documentFramingMargin
         }
-        if let enforcedDocumentGroup = captureAnalyzerSettingsDict["enforcedDocumentGroup"] as? Int {
-            if let value = MBCCEnforcedDocumentGroup(rawValue: enforcedDocumentGroup) {
-                analyzerSettings.enforcedDocumentGroup = value
-            }
+        if let enforcedDocumentGroup = captureAnalyzerSettingsDict["enforcedDocumentGroup"] as? Int,
+            let enforcedDocumentGroupValue = MBCCEnforcedDocumentGroup(rawValue: enforcedDocumentGroup) {
+                analyzerSettings.enforcedDocumentGroup = enforcedDocumentGroupValue
         }
-        if let glarePolicy = captureAnalyzerSettingsDict["glarePolicy"] as? Int {
-            if let value = MBCCGlarePolicy(rawValue: glarePolicy) {
-                analyzerSettings.glarePolicy = value
-            }
+        if let glarePolicy = captureAnalyzerSettingsDict["glarePolicy"] as? Int,
+            let glarePolicyValue = MBCCGlarePolicy(rawValue: glarePolicy) {
+                analyzerSettings.glarePolicy = glarePolicyValue
         }
         if let handOcclusionThreshold = captureAnalyzerSettingsDict["handOcclusionThreshold"] as? Double {
             analyzerSettings.handOcclusionThreshold = handOcclusionThreshold
@@ -108,11 +122,10 @@ class CaptureSerializationUtils {
         if let keepMarginOnTransformedDocumentImage = captureAnalyzerSettingsDict["keepMarginOnTransformedDocumentImage"] as? Bool {
             analyzerSettings.keepMarginOnTransformedDocumentImage = keepMarginOnTransformedDocumentImage
         }
-        if let lightingThresholds = captureAnalyzerSettingsDict["lightingThresholds"] as? Dictionary<String, Any> {
-            if let tooDarkTreshold = lightingThresholds["tooDarkTreshold"] as? Double,
-               let tooBrightThreshold = lightingThresholds["tooBrightThreshold"] as? Double {
+        if let lightingThresholds = captureAnalyzerSettingsDict["lightingThresholds"] as? Dictionary<String, Any>,
+            let tooDarkTreshold = lightingThresholds["tooDarkTreshold"] as? Double,
+            let tooBrightThreshold = lightingThresholds["tooBrightThreshold"] as? Double  {
                 analyzerSettings.lightingThresholds = MBCCLightingThresholds(tooDarkTreshold: tooDarkTreshold, tooBrightThreshold: tooBrightThreshold)
-            }
         }
         if let minimumDocumentDpi = captureAnalyzerSettingsDict["minimumDocumentDpi"] as? Int {
             analyzerSettings.minimumDocumentDpi = minimumDocumentDpi
@@ -120,18 +133,16 @@ class CaptureSerializationUtils {
         if let returnTransformedDocumentImage = captureAnalyzerSettingsDict["returnTransformedDocumentImage"] as? Bool {
             analyzerSettings.returnTransformedDocumentImage = returnTransformedDocumentImage
         }
-        if let tiltPolicy = captureAnalyzerSettingsDict["tiltPolicy"] as? Int {
-            if let value = MBCCTiltPolicy(rawValue: tiltPolicy) {
-                analyzerSettings.tiltPolicy = value
-            }
+        if let tiltPolicy = captureAnalyzerSettingsDict["tiltPolicy"] as? Int,
+           let tiltPolicyValue = MBCCTiltPolicy(rawValue: tiltPolicy) {
+            analyzerSettings.tiltPolicy = tiltPolicyValue
         }
         return analyzerSettings
     }
     
     static func deserializeCaptureUxSettings(_ captureUxSettingsDict: Dictionary<String, Any>) -> MBICCaptureUXSettings {
         let uxSettings = MBICCaptureUXSettings()
-        // TODO: Check if keepScreenOn is implemented on iOS
-       // if let keepScreenOn = captureUxSettingsDict["keepScreenOn"] as? Int {}
+        
         if let showHelpTooltipTimeIntervalMs = captureUxSettingsDict["showHelpTooltipTimeIntervalMs"] as? Double {
             uxSettings.captureHelpTooltipTimeoutInterval = showHelpTooltipTimeIntervalMs / 1000
         }
@@ -144,6 +155,13 @@ class CaptureSerializationUtils {
         if let sideCaptureTimeoutMs = captureUxSettingsDict["sideCaptureTimeoutMs"] as? Double {
             uxSettings.sideCaptureTimeout = sideCaptureTimeoutMs / 1000
         }
+        if let keepScreenOn = captureUxSettingsDict["keepScreenOn"] as? Bool {
+            uxSettings.isIdleTimerDisabled = keepScreenOn
+        }
+        if let showCaptureHelpTooltip = captureUxSettingsDict["showCaptureHelpTooltip"] as? Bool {
+            uxSettings.showCaptureHelpTooltip = showCaptureHelpTooltip
+        }
+        
         return uxSettings
     }
     
@@ -157,13 +175,19 @@ class CaptureSerializationUtils {
         return cameraSettings
     }
     
-    static func deserializeCaptureFilterSettings(_ captureUxSettingsDict: Dictionary<String, String>) -> MBICFilterSettings {
-        let filterSettings = MBICFilterSettings()
-        return filterSettings
+    static func encodeImage(_ image: UIImage?) -> String? {
+        if let image = image {
+            return image.jpegData(compressionQuality: 0.9)?.base64EncodedString()
+        }
+        return nil
     }
-
     
-    static func deserializeCaptureOverlayStringSettings(_ captureOverlayStringDict: Dictionary<String, String>) {
-        
+    static func encodeToJson(_ resultDict: Dictionary<String, Any>) -> String? {
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: resultDict, options: .prettyPrinted)
+            return String(data:jsonData, encoding: .utf8)
+        } catch {
+            return ""
+        }
     }
 }

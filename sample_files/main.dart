@@ -1,11 +1,11 @@
-import 'package:capture_flutter/CaptureSettings.dart';
 import 'package:flutter/material.dart';
 import "dart:convert";
 import "dart:async";
 import 'package:flutter/services.dart';
-import 'package:capture_flutter/capture_flutter_method_channel.dart';
-import 'dart:typed_data';
-import 'package:capture_flutter/CaptureEnums.dart';
+import 'package:capture_flutter/capture_flutter.dart';
+import 'package:capture_flutter/capture_settings.dart';
+import 'package:capture_flutter/capture_enums.dart';
+import 'package:capture_flutter/capture_analyzer_result.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,6 +17,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  String resultString = "";
   Uint8List? firstCapturedImage;
   Uint8List? firstTransformedImage;
   Uint8List? secondCapturedImage;
@@ -24,6 +25,9 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> scan() async {
     try {
+      // initialize Capture plugin
+      final capturePlugin = CaptureFlutter();
+
       // setup Capture settings
       final settings = CaptureSettings();
 
@@ -34,12 +38,11 @@ class _MyAppState extends State<MyApp> {
 
       // modify Analyzer settings
       settings.analyzerSettings?.captureStrategy = CaptureStrategy.Default;
-      settings.analyzerSettings?.documentFramingMargin = 0.3;
+      settings.analyzerSettings?.documentFramingMargin = 0.01;
       settings.analyzerSettings?.keepMarginOnTransformedDocumentImage = true;
-      settings.analyzerSettings?.enforcedDocumentGroup =
-          EnforcedDocumentGroup.Id;
-      settings.analyzerSettings?.lightingThresholds.tooBrightThreshold = 0.99;
-      settings.analyzerSettings?.lightingThresholds.tooDarkThreshold = 0.99;
+      // settings.analyzerSettings?.enforcedDocumentGroup = EnforcedDocumentGroup.;
+      //   settings.analyzerSettings?.lightingThresholds.tooBrightThreshold = 0.99;
+      //   settings.analyzerSettings?.lightingThresholds.tooDarkThreshold = 0.99;
 
       // modify Camera settings
       settings.cameraSettings?.iosCameraResolution =
@@ -56,36 +59,36 @@ class _MyAppState extends State<MyApp> {
       } else {
         licenseKey = "";
       }
+
       // add the license key and the Capture settings in the scanWithCamera method
-      var results = await MethodChannelCaptureFlutter.scanWithCamera(
-          settings, licenseKey);
+      var results = await capturePlugin.scanWithCamera(settings, licenseKey);
 
       // get the results
-      if (results?.completnessStatus != CompletnessStatus.Empty) {
+      if (results?.completnessStatus == CompletnessStatus.Complete) {
         setState(() {
-          try {
-            firstCapturedImage =
-                base64Decode(getImage(results?.firstCapture?.capturedImage));
-            firstTransformedImage =
-                base64Decode(getImage(results?.firstCapture?.transformedImage));
+          resultString = getCaptureStringResult(results);
+          firstCapturedImage =
+              base64Decode(getImage(results?.firstCapture?.capturedImage));
+          firstTransformedImage =
+              base64Decode(getImage(results?.firstCapture?.transformedImage));
 
-            if (results?.completnessStatus !=
-                CompletnessStatus.OneSideMissing) {
-              secondCapturedImage =
-                  base64Decode(getImage(results?.secondCapture?.capturedImage));
-              secondTransformedImage = base64Decode(
-                  getImage(results?.secondCapture?.transformedImage));
-            }
-          } catch (error) {
-            print("issue with image decode: $error");
+          if (results?.secondCapture?.capturedImage != null) {
+            secondCapturedImage =
+                base64Decode(getImage(results?.secondCapture?.capturedImage));
+            secondTransformedImage = base64Decode(
+                getImage(results?.secondCapture?.transformedImage));
+          } else {
+            secondCapturedImage = null;
+            secondTransformedImage = null;
           }
         });
       }
     } catch (captureError) {
       if (captureError is PlatformException) {
-        print("Capture error: ");
-        print(captureError.message);
-        setState(() {});
+        setState(() {
+          var message = captureError.message;
+          resultString = "Capture error: $message";
+        });
       }
     }
   }
@@ -98,24 +101,25 @@ class _MyAppState extends State<MyApp> {
     return cleanedBase64;
   }
 
-  void showAlert(BuildContext context, String title, String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(title),
-          content: Text(message),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text("OK"),
-            ),
-          ],
-        );
-      },
-    );
+  String getCaptureStringResult(AnalyzerResult? result) {
+    return buildAnalyzerResult(
+            result?.completnessStatus, "Completness status") +
+        buildAnalyzerResult(result?.documentGroup, "Document group") +
+        buildAnalyzerResult(
+            result?.firstCapture?.side.toString(), "First capture side") +
+        buildAnalyzerResult(
+            result?.firstCapture?.dpiAdjusted, "First capture DPI adjusted") +
+        buildAnalyzerResult(
+            result?.secondCapture?.side, "Second capture side") +
+        buildAnalyzerResult(
+            result?.secondCapture?.dpiAdjusted, "Second capture DPI adjusted ");
+  }
+
+  String buildAnalyzerResult(dynamic result, String propertyName) {
+    if (result == null || result == "") {
+      return "";
+    }
+    return "$propertyName: $result\n";
   }
 
   @override
@@ -126,32 +130,33 @@ class _MyAppState extends State<MyApp> {
           title: const Text("Capture Sample"),
         ),
         body: SingleChildScrollView(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             children: <Widget>[
               Center(
                 child: Padding(
-                  padding: EdgeInsets.only(bottom: 16.0),
+                  padding: const EdgeInsets.only(bottom: 16.0),
                   child: ElevatedButton(
                     onPressed: scan,
-                    child: Text("Scan with camera"),
+                    child: const Text("Scan with camera"),
                   ),
                 ),
               ),
+              Text(resultString),
               if (firstCapturedImage != null) ...[
-                Text("First Capture - Original"),
+                const Text("First Capture - Captured Image"),
                 Image.memory(firstCapturedImage!),
               ],
               if (firstTransformedImage != null) ...[
-                Text("First Capture - Transformed"),
+                const Text("First Capture - Transformed Image"),
                 Image.memory(firstTransformedImage!),
               ],
               if (secondCapturedImage != null) ...[
-                Text("Second Capture - Original"),
+                const Text("Second Capture - Captured Image"),
                 Image.memory(secondCapturedImage!),
               ],
               if (secondTransformedImage != null) ...[
-                Text("Second Capture - Transformed"),
+                const Text("Second Capture - Transformed Image"),
                 Image.memory(secondTransformedImage!),
               ],
             ],

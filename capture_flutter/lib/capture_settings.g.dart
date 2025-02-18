@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'CaptureSettings.dart';
+part of 'capture_settings.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
@@ -29,26 +29,31 @@ Map<String, dynamic> _$CaptureSettingsToJson(CaptureSettings instance) =>
 
 AnalyzerSettings _$AnalyzerSettingsFromJson(Map<String, dynamic> json) =>
     AnalyzerSettings()
-      ..captureSingleSide = json['captureSingleSide'] as bool
+      ..captureSingleSide = json['captureSingleSide'] as bool?
       ..returnTransformedDocumentImage =
-          json['returnTransformedDocumentImage'] as bool
+          json['returnTransformedDocumentImage'] as bool?
       ..captureStrategy =
-          $enumDecode(_$CaptureStrategyEnumMap, json['captureStrategy'])
-      ..minimumDocumentDpi = (json['minimumDocumentDpi'] as num).toInt()
-      ..adjustMinimumDocumentDpi = json['adjustMinimumDocumentDpi'] as bool
+          $enumDecodeNullable(_$CaptureStrategyEnumMap, json['captureStrategy'])
+      ..minimumDocumentDpi = (json['minimumDocumentDpi'] as num?)?.toInt()
+      ..adjustMinimumDocumentDpi = json['adjustMinimumDocumentDpi'] as bool?
       ..documentFramingMargin =
-          (json['documentFramingMargin'] as num).toDouble()
+          (json['documentFramingMargin'] as num?)?.toDouble()
       ..keepMarginOnTransformedDocumentImage =
-          json['keepMarginOnTransformedDocumentImage'] as bool
+          json['keepMarginOnTransformedDocumentImage'] as bool?
       ..keepDpiOnTransformedDocumentImage =
-          json['keepDpiOnTransformedDocumentImage'] as bool
-      ..lightingThresholds = LightingThresholds.fromJson(
-          json['lightingThresholds'] as Map<String, dynamic>)
-      ..blurPolicy = $enumDecode(_$BlurPolicyEnumMap, json['blurPolicy'])
-      ..glarePolicy = $enumDecode(_$GlarePolicyEnumMap, json['glarePolicy'])
+          json['keepDpiOnTransformedDocumentImage'] as bool?
+      ..lightingThresholds = json['lightingThresholds'] == null
+          ? null
+          : LightingThresholds.fromJson(
+              json['lightingThresholds'] as Map<String, dynamic>)
+      ..blurPolicy =
+          $enumDecodeNullable(_$BlurPolicyEnumMap, json['blurPolicy'])
+      ..glarePolicy =
+          $enumDecodeNullable(_$GlarePolicyEnumMap, json['glarePolicy'])
       ..handOcclusionThreshold =
-          (json['handOcclusionThreshold'] as num).toDouble()
-      ..tiltPolicy = $enumDecode(_$TiltPolicyEnumMap, json['tiltPolicy'])
+          (json['handOcclusionThreshold'] as num?)?.toDouble()
+      ..tiltPolicy =
+          $enumDecodeNullable(_$TiltPolicyEnumMap, json['tiltPolicy'])
       ..enforcedDocumentGroup = $enumDecodeNullable(
           _$EnforcedDocumentGroupEnumMap, json['enforcedDocumentGroup']);
 
@@ -56,7 +61,7 @@ Map<String, dynamic> _$AnalyzerSettingsToJson(AnalyzerSettings instance) =>
     <String, dynamic>{
       'captureSingleSide': instance.captureSingleSide,
       'returnTransformedDocumentImage': instance.returnTransformedDocumentImage,
-      'captureStrategy': _$CaptureStrategyEnumMap[instance.captureStrategy]!,
+      'captureStrategy': _$CaptureStrategyEnumMap[instance.captureStrategy],
       'minimumDocumentDpi': instance.minimumDocumentDpi,
       'adjustMinimumDocumentDpi': instance.adjustMinimumDocumentDpi,
       'documentFramingMargin': instance.documentFramingMargin,
@@ -65,10 +70,10 @@ Map<String, dynamic> _$AnalyzerSettingsToJson(AnalyzerSettings instance) =>
       'keepDpiOnTransformedDocumentImage':
           instance.keepDpiOnTransformedDocumentImage,
       'lightingThresholds': instance.lightingThresholds,
-      'blurPolicy': _$BlurPolicyEnumMap[instance.blurPolicy]!,
-      'glarePolicy': _$GlarePolicyEnumMap[instance.glarePolicy]!,
+      'blurPolicy': _$BlurPolicyEnumMap[instance.blurPolicy],
+      'glarePolicy': _$GlarePolicyEnumMap[instance.glarePolicy],
       'handOcclusionThreshold': instance.handOcclusionThreshold,
-      'tiltPolicy': _$TiltPolicyEnumMap[instance.tiltPolicy]!,
+      'tiltPolicy': _$TiltPolicyEnumMap[instance.tiltPolicy],
       'enforcedDocumentGroup':
           _$EnforcedDocumentGroupEnumMap[instance.enforcedDocumentGroup],
     };
@@ -102,11 +107,12 @@ const _$TiltPolicyEnumMap = {
 };
 
 const _$EnforcedDocumentGroupEnumMap = {
-  EnforcedDocumentGroup.Dl: 0,
-  EnforcedDocumentGroup.Id: 1,
-  EnforcedDocumentGroup.Passport: 2,
-  EnforcedDocumentGroup.PassportCard: 3,
-  EnforcedDocumentGroup.Visa: 4,
+  EnforcedDocumentGroup.None: 0,
+  EnforcedDocumentGroup.Dl: 1,
+  EnforcedDocumentGroup.Id: 2,
+  EnforcedDocumentGroup.Passport: 3,
+  EnforcedDocumentGroup.PassportCard: 4,
+  EnforcedDocumentGroup.Visa: 5,
 };
 
 LightingThresholds _$LightingThresholdsFromJson(Map<String, dynamic> json) =>
@@ -121,19 +127,21 @@ Map<String, dynamic> _$LightingThresholdsToJson(LightingThresholds instance) =>
     };
 
 UxSettings _$UxSettingsFromJson(Map<String, dynamic> json) => UxSettings()
-  ..showIntroductionDialog = json['showIntroductionDialog'] as bool
-  ..showOnboardingInfo = json['showOnboardingInfo'] as bool
+  ..showIntroductionDialog = json['showIntroductionDialog'] as bool?
+  ..showOnboardingInfo = json['showOnboardingInfo'] as bool?
+  ..keepScreenOn = json['keepScreenOn'] as bool?
+  ..showCaptureHelpTooltip = json['showCaptureHelpTooltip'] as bool?
   ..showHelpTooltipTimeIntervalMs =
       (json['showHelpTooltipTimeIntervalMs'] as num?)?.toDouble()
-  ..keepScreenOn = json['keepScreenOn'] as bool?
   ..sideCaptureTimeoutMs = (json['sideCaptureTimeoutMs'] as num?)?.toDouble();
 
 Map<String, dynamic> _$UxSettingsToJson(UxSettings instance) =>
     <String, dynamic>{
       'showIntroductionDialog': instance.showIntroductionDialog,
       'showOnboardingInfo': instance.showOnboardingInfo,
-      'showHelpTooltipTimeIntervalMs': instance.showHelpTooltipTimeIntervalMs,
       'keepScreenOn': instance.keepScreenOn,
+      'showCaptureHelpTooltip': instance.showCaptureHelpTooltip,
+      'showHelpTooltipTimeIntervalMs': instance.showHelpTooltipTimeIntervalMs,
       'sideCaptureTimeoutMs': instance.sideCaptureTimeoutMs,
     };
 

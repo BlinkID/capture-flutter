@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import com.microblink.capture.CaptureSDK
+import com.microblink.capture.licence.exception.LicenceKeyException
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -45,15 +46,23 @@ class CaptureFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Ac
       val captureSettings = args?.get("captureSettings") as? Map<String, Any>
 
       CaptureSerializationUtils().deserializeCaptureLicenseKey(licenseMap, activity as Context)
-
-      activity?.let {
+      activity?.let { it ->
         val intent = Intent(it, CaptureActivity::class.java).apply {
-          putExtra("captureSettings", captureSettings?.let { JSONObject(it).toString() })
+          captureSettings?.let {
+            putExtra("captureSettings", it.toString())
+          } ?: result?.error(CAPTURE_ANDROID_ERROR, "Incorrectly set Capture Settings!", null)
         }
         it.startActivityForResult(intent, CAPTURE_REQUEST_CODE)
-      } ?: result?.error("noActivityError", "Activity is null", null)
+      } ?: result?.error(CAPTURE_ANDROID_ERROR, "Activity is null", null)
     } catch (error: Exception) {
-      result?.error("androidCaptureError", error.message, null)
+      when (error) {
+        is LicenceKeyException -> {
+          result?.error(CAPTURE_ANDROID_LICENSE_ERROR, error.message, null)
+        }
+        else -> {
+          result?.error(CAPTURE_ANDROID_ERROR, error.message, null)
+        }
+      }
     }
   }
 
@@ -73,7 +82,9 @@ class CaptureFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Ac
 
         Activity.RESULT_CANCELED -> {
           val errorData = data?.getStringExtra("captureError")
-          result?.error("androidCaptureError", errorData.toString(), null)
+          errorData?.let {
+            result?.error(CAPTURE_ANDROID_ERROR, errorData.toString(), null)
+          } ?: result?.error(CAPTURE_ANDROID_ERROR, "Capture canceled", null)
         }
       }
     }
@@ -103,5 +114,7 @@ class CaptureFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, Ac
 
   companion object {
     private const val CAPTURE_REQUEST_CODE = 1001
+    private const val CAPTURE_ANDROID_ERROR = "CaptureAndroidError"
+    private const val CAPTURE_ANDROID_LICENSE_ERROR = "CaptureAndroidLicenseError"
   }
 }

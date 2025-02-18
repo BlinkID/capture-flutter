@@ -1,5 +1,4 @@
-import 'CaptureEnums.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'capture_enums.dart';
 
 class AnalyzerResult {
   SideCaptureResult? firstCapture;

@@ -1,15 +1,12 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'CaptureEnums.dart';
-
-part 'CaptureSettings.g.dart';
+import 'package:capture_flutter/capture_enums.dart';
+part 'package:capture_flutter/capture_settings.g.dart';
 
 @JsonSerializable()
 class CaptureSettings {
   AnalyzerSettings? analyzerSettings = AnalyzerSettings();
   UxSettings? uxSettings = UxSettings();
   CameraSettings? cameraSettings = CameraSettings();
-  //FilterSettings? filterSettings;
-  //CaptureOverlayStringSettings? stringSettings;
 
   CaptureSettings();
 
@@ -20,19 +17,32 @@ class CaptureSettings {
 
 @JsonSerializable()
 class AnalyzerSettings {
-  bool captureSingleSide = false;
-  bool returnTransformedDocumentImage = true;
-  CaptureStrategy captureStrategy = CaptureStrategy.Default;
-  int minimumDocumentDpi = 230;
-  bool adjustMinimumDocumentDpi = true;
-  double documentFramingMargin = 0.01;
-  bool keepMarginOnTransformedDocumentImage = false;
-  bool keepDpiOnTransformedDocumentImage = false;
-  LightingThresholds lightingThresholds = LightingThresholds();
-  BlurPolicy blurPolicy = BlurPolicy.Normal;
-  GlarePolicy glarePolicy = GlarePolicy.Normal;
-  double handOcclusionThreshold = 0.05;
-  TiltPolicy tiltPolicy = TiltPolicy.Normal;
+  bool? captureSingleSide;
+
+  bool? returnTransformedDocumentImage;
+
+  CaptureStrategy? captureStrategy;
+
+  int? minimumDocumentDpi;
+
+  bool? adjustMinimumDocumentDpi;
+
+  double? documentFramingMargin;
+
+  bool? keepMarginOnTransformedDocumentImage;
+
+  bool? keepDpiOnTransformedDocumentImage;
+
+  LightingThresholds? lightingThresholds = LightingThresholds();
+
+  BlurPolicy? blurPolicy;
+
+  GlarePolicy? glarePolicy;
+
+  double? handOcclusionThreshold;
+
+  TiltPolicy? tiltPolicy;
+
   EnforcedDocumentGroup? enforcedDocumentGroup;
 
   AnalyzerSettings();
@@ -45,6 +55,7 @@ class AnalyzerSettings {
 @JsonSerializable()
 class LightingThresholds {
   double? tooDarkThreshold;
+
   double? tooBrightThreshold;
 
   LightingThresholds();
@@ -56,10 +67,11 @@ class LightingThresholds {
 
 @JsonSerializable()
 class UxSettings {
-  bool showIntroductionDialog = false;
-  bool showOnboardingInfo = true;
+  bool? showIntroductionDialog;
+  bool? showOnboardingInfo;
+  bool? keepScreenOn;
+  bool? showCaptureHelpTooltip;
   double? showHelpTooltipTimeIntervalMs;
-  bool? keepScreenOn = true;
   double? sideCaptureTimeoutMs;
 
   UxSettings();
@@ -80,19 +92,4 @@ class CameraSettings {
   factory CameraSettings.fromJson(Map<String, dynamic> json) =>
       _$CameraSettingsFromJson(json);
   Map<String, dynamic> toJson() => _$CameraSettingsToJson(this);
-}
-
-class FilterSettings {
-  //TODO: Implement FilterSettings
-}
-
-class CaptureOverlayStringSettings {
-  String? flashlightWarning;
-  String? helpTooltip;
-  /**
-   * TODO: Implement the following string classes:
-   * val onboardingStrings: OnboardingStrings = OnboardingStrings(), 
-   * val instructionsStrings: InstructionsStrings = InstructionsStrings(), 
-   * val alertStrings: AlertStrings = AlertStrings() 
-   * */
 }
