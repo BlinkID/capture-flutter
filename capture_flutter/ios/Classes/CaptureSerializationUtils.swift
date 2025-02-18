@@ -170,9 +170,9 @@ class CaptureSerializationUtils {
     
     static func encodeImage(_ image: UIImage?) -> String? {
         if let image = image {
-            return image.jpegData(compressionQuality: 1.0)?.base64EncodedString()
+            return image.jpegData(compressionQuality: 0.9)?.base64EncodedString()
         }
-        return ""
+        return nil
     }
     
     static func encodeToJson(_ resultDict: Dictionary<String, Any>) -> String? {

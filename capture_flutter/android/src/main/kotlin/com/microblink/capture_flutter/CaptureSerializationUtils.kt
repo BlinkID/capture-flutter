@@ -91,11 +91,11 @@ class CaptureSerializationUtils {
         }
     }
 
-    private fun encodeBase64Image(image: Bitmap?): String {
+    private fun encodeBase64Image(image: Bitmap?): String? {
         return image?.let {
             val outputStream = ByteArrayOutputStream()
-            it.compress(Bitmap.CompressFormat.JPEG, 70, outputStream)
+            it.compress(Bitmap.CompressFormat.JPEG, 90, outputStream)
             Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT)
-        } ?: ""
+        }
     }
 }
