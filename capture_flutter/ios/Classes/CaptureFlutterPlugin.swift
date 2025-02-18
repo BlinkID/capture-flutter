@@ -5,6 +5,7 @@ import CaptureUX
 public class CaptureFlutterPlugin: NSObject, FlutterPlugin {
     var result: FlutterResult?
     let iosLicenseKeyError = "CaptureiOSLicenseError"
+    let iosCaptureError = "CaptureiOSError"
     
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "capture_flutter", binaryMessenger: registrar.messenger())
@@ -34,7 +35,7 @@ public class CaptureFlutterPlugin: NSObject, FlutterPlugin {
                         let rootVc = UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController
                         rootVc?.present(captureVC, animated: true)
                     } else {
-                        self.result!(FlutterError(code: "CaptureiOSError", message: "Incorrectly set Capture Settings!", details: nil))
+                        self.result!(FlutterError(code: iosCaptureError, message: "Incorrectly set Capture Settings!", details: nil))
                     }
                 } else {
                     self.result!(FlutterError(code: iosLicenseKeyError, message: licenseErrorString, details: nil))
