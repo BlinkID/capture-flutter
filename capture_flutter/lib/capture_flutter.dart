@@ -7,7 +7,8 @@ import 'capture_flutter_platform_interface.dart';
 
 class CaptureFlutter {
   Future<AnalyzerResult?> scanWithCamera(
-      CaptureSettings settings, String licenseKey) {
-    return CaptureFlutterPlatform.instance.scanWithCamera(settings, licenseKey);
+      CaptureSettings captureSettings, String licenseKey) {
+    return CaptureFlutterPlatform.instance
+        .scanWithCamera(captureSettings, licenseKey);
   }
 }

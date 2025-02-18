@@ -26,7 +26,8 @@ abstract class CaptureFlutterPlatform extends PlatformInterface {
   }
 
   Future<AnalyzerResult?> scanWithCamera(
-      CaptureSettings settings, String license) {
-    return MethodChannelCaptureFlutter().scanWithCamera(settings, license);
+      CaptureSettings captureSettings, String license) {
+    return MethodChannelCaptureFlutter()
+        .scanWithCamera(captureSettings, license);
   }
 }

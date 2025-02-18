@@ -19,11 +19,9 @@ class MethodChannelCaptureFlutter extends CaptureFlutterPlatform {
 
   static const String ARG_CAPTURE_SETTINGS = 'captureSettings';
 
-  static Future<AnalyzerResult?> scanWithCamera(
+  @override
+  Future<AnalyzerResult?> scanWithCamera(
       CaptureSettings captureSettings, String license) async {
-    //final analyzerResult = await methodChannel
-    //    .invokeMethod<Map<Object?, Object?>>('scanWithCamera');
-    //final nativeAnalyzerResult = Map<String, dynamic>.from(analyzerResult!);
     try {
       final jsonAnalyzerResults =
           await methodChannel.invokeMethod(METHOD_SCAN_WITH_CAMERA, {

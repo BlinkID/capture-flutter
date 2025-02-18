@@ -21,7 +21,7 @@ class AnalyzerSettings {
   bool captureSingleSide = false;
   bool returnTransformedDocumentImage = true;
   CaptureStrategy captureStrategy = CaptureStrategy.Default;
-  int minimumDocumentDpi = 230;
+  int minimumDocumentDpi = 250;
   bool adjustMinimumDocumentDpi = true;
   double documentFramingMargin = 0.01;
   bool keepMarginOnTransformedDocumentImage = false;
