@@ -1,15 +1,21 @@
-# capture_flutter
+<p align="center" >
+  <img src="https://raw.githubusercontent.com/wiki/blinkid/blinkid-android/images/logo-microblink.png" alt="Microblink" title="Microblink">
+</p>
 
-A new Flutter plugin project.
+# _Capture_ SDK Flutter plugin
 
-## Getting Started
+## Requirements
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/to/develop-plugins),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+## Quickstart with the sample application
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Integration
 
+## Plugin usage
+
+## Platform specifics
+
+### Android
+
+### iOS
+
+## Licensing
