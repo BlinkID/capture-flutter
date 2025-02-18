@@ -81,11 +81,13 @@ class CaptureSerializationUtils {
 
     @Throws(LicenceKeyException::class)
     fun deserializeCaptureLicenseKey(jsonLicenseKey: Map<String, Any>?, context: Context) {
-        val licenseKey = jsonLicenseKey?.get("licenseKey") as String
-        try {
-            CaptureSDK.setLicenseKey(licenseKey, context)
-        } catch (error: LicenceKeyException) {
-            throw error
+        val licenseKey = jsonLicenseKey?.get("licenseKey") as? String
+        licenseKey?.let {
+            try {
+                CaptureSDK.setLicenseKey(it, context)
+            } catch (error: LicenceKeyException) {
+                throw error
+            }
         }
     }
 
