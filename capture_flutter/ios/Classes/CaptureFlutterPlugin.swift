@@ -4,9 +4,7 @@ import CaptureUX
 
 public class CaptureFlutterPlugin: NSObject, FlutterPlugin {
     var result: FlutterResult?
-    
     let iosLicenseKeyError = "CaptureiOSLicenseError"
-    var captureSettings: MBICCaptureSettings?
     
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(name: "capture_flutter", binaryMessenger: registrar.messenger())
@@ -30,14 +28,11 @@ public class CaptureFlutterPlugin: NSObject, FlutterPlugin {
                 let (isKeyValid, licenseErrorString) = CaptureSerializationUtils.deserializeLicenseKey(licenseKey)
                 if isKeyValid {
                     if let captureSettings = args["captureSettings"] as? Dictionary<String, Any> {
-                        setupCaptureSettings(captureSettings)
-                        if let settings = self.captureSettings {
-                            let captureVC = MBICCaptureViewController(captureSettings: settings)
-                            captureVC.delegate = self
-                            captureVC.modalPresentationStyle = .fullScreen
-                            let rootVc = UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController
-                            rootVc?.present(captureVC, animated: true)
-                        }
+                        let captureVC = MBICCaptureViewController(captureSettings: CaptureSerializationUtils.deserializeCaptureSettings(captureSettings))
+                        captureVC.delegate = self
+                        captureVC.modalPresentationStyle = .fullScreen
+                        let rootVc = UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController
+                        rootVc?.present(captureVC, animated: true)
                     }
                 } else {
                     self.result!(FlutterError(code: iosLicenseKeyError, message: licenseErrorString, details: nil))
@@ -46,10 +41,6 @@ public class CaptureFlutterPlugin: NSObject, FlutterPlugin {
                 self.result!(FlutterError(code: iosLicenseKeyError, message: "Invalid license key!", details: nil))
             }
         }
-    }
-    
-    private func setupCaptureSettings(_ captureSettingsDict: Dictionary<String, Any>) {
-        self.captureSettings = CaptureSerializationUtils.deserializeCaptureSettings(captureSettingsDict)
     }
 }
 
