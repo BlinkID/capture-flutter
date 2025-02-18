@@ -1,8 +1,8 @@
-import 'package:capture_flutter/CaptureSettings.dart';
+import 'package:capture_flutter/capture_settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'capture_flutter_platform_interface.dart';
-import 'CaptureAnalyzerResult.dart';
+import 'package:capture_flutter/capture_flutter_platform_interface.dart';
+import 'package:capture_flutter/capture_analyzer_result.dart';
 
 import 'dart:convert';
 
@@ -22,18 +22,13 @@ class MethodChannelCaptureFlutter extends CaptureFlutterPlatform {
   @override
   Future<AnalyzerResult?> scanWithCamera(
       CaptureSettings captureSettings, String license) async {
-    try {
-      final jsonAnalyzerResults =
-          await methodChannel.invokeMethod(METHOD_SCAN_WITH_CAMERA, {
-        ARG_CAPTURE_SETTINGS: jsonDecode(jsonEncode(captureSettings)),
-        ARG_LICENSE: {ARG_LICENSE_KEY: license}
-      });
+    final jsonAnalyzerResults =
+        await methodChannel.invokeMethod(METHOD_SCAN_WITH_CAMERA, {
+      ARG_CAPTURE_SETTINGS: jsonDecode(jsonEncode(captureSettings)),
+      ARG_LICENSE: {ARG_LICENSE_KEY: license}
+    });
 
-      final nativeAnalyzerResult = jsonDecode(jsonAnalyzerResults);
-      return AnalyzerResult(Map<String, dynamic>.from(nativeAnalyzerResult));
-    } catch (error) {
-      print("Captured the error: $error");
-    }
-    return null;
+    final nativeAnalyzerResult = jsonDecode(jsonAnalyzerResults);
+    return AnalyzerResult(Map<String, dynamic>.from(nativeAnalyzerResult));
   }
 }

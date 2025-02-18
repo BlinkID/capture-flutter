@@ -1,5 +1,5 @@
-import 'package:capture_flutter/CaptureAnalyzerResult.dart';
-import 'package:capture_flutter/CaptureSettings.dart';
+import 'package:capture_flutter/capture_analyzer_result.dart';
+import 'package:capture_flutter/capture_settings.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'capture_flutter_method_channel.dart';

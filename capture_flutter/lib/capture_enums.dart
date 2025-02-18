@@ -100,18 +100,21 @@ enum TiltPolicy {
 
 enum EnforcedDocumentGroup {
   @JsonValue(0)
-  Dl,
+  None,
 
   @JsonValue(1)
-  Id,
+  Dl,
 
   @JsonValue(2)
-  Passport,
+  Id,
 
   @JsonValue(3)
-  PassportCard,
+  Passport,
 
   @JsonValue(4)
+  PassportCard,
+
+  @JsonValue(5)
   Visa
 }
 
