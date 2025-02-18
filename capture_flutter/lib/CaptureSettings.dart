@@ -8,8 +8,6 @@ class CaptureSettings {
   AnalyzerSettings? analyzerSettings = AnalyzerSettings();
   UxSettings? uxSettings = UxSettings();
   CameraSettings? cameraSettings = CameraSettings();
-  //FilterSettings? filterSettings;
-  //CaptureOverlayStringSettings? stringSettings;
 
   CaptureSettings();
 

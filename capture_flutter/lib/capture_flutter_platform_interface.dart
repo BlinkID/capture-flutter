@@ -1,3 +1,5 @@
+import 'package:capture_flutter/CaptureAnalyzerResult.dart';
+import 'package:capture_flutter/CaptureSettings.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'capture_flutter_method_channel.dart';
@@ -23,7 +25,8 @@ abstract class CaptureFlutterPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
+  Future<AnalyzerResult?> scanWithCamera(
+      CaptureSettings settings, String license) {
+    return MethodChannelCaptureFlutter().scanWithCamera(settings, license);
   }
 }
