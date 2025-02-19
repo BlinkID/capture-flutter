@@ -43,8 +43,65 @@ Note: the plugin can be run directly via Xcode and Android Studio:
 2. Open the `android` folder via Android Studio in the `sample` folder to run the Android sample application.
 
 ## Integration
+To add the Capture plugin to your Flutter application, simply add the following dependency in the pubsec.yaml:
+```
+dependencies:
+...
+  capture_flutter:
+```
 
 ## Plugin usage
+1. After the dependency has been added to the project, firstly add the neccessery imports:
+```dart
+import 'package:capture_flutter/capture_flutter.dart';
+import 'package:capture_flutter/capture_settings.dart';
+import 'package:capture_flutter/capture_enums.dart';
+import 'package:capture_flutter/capture_analyzer_result.dart';
+```
+2. Initialize the Capture plugin:
+```dart
+final capturePlugin = CaptureFlutter();
+```
+3. Set all of the neccessary Capture settings (Analyzer, UX and Camera). You do not need to modify anything from these settings:
+```dart
+// Create Capture settings
+
+// Modify Capture UX settings
+settings.uxSettings?.showOnboardingInfo = true;
+settings.uxSettings?.showIntroductionDialog = true;
+settings.uxSettings?.showHelpTooltipTimeIntervalMs = 2000;
+
+// Modify Capture Analyzer settings
+settings.analyzerSettings?.captureStrategy = CaptureStrategy.Default;
+settings.analyzerSettings?.documentFramingMargin = 0.01;
+settings.analyzerSettings?.keepMarginOnTransformedDocumentImage = true;
+
+// Modify Capture Camera settings
+settings.cameraSettings?.iosCameraResolution = IosCameraResolution.Resolution4K;
+```
+
+4. Add the license key and previously configured Capture settings, and obtain the results after the capture process has finished:
+```dart
+// Add the license key
+var licenseKey = "";
+if (Theme.of(context).platform == TargetPlatform.iOS) {
+    licenseKey = "your-iOS-license-key";
+} else if (Theme.of(context).platform == TargetPlatform.android) {
+    licenseKey = 'your-Android-license-key';
+} else {
+    licenseKey = "";
+}
+
+// Add the license key and the Capture settings in the scanWithCamera method
+var results = await capturePlugin.scanWithCamera(settings,licenseKey);
+
+if (results?.completnessStatus == CompletnessStatus.Complete) {
+  // handle the obtained results
+  print(result?.documentGroup);
+}
+```
+
+The whole integration process can be found in the sample apps `main.dart` file [here](https://github.com/BlinkID/capture-flutter/blob/main/sample_files/main.dart).
 
 ## Platform specifics
 
