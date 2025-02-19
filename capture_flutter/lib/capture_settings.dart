@@ -12,6 +12,8 @@ class CaptureSettings {
   /// See [UxSettings] for more detailed information.
   UxSettings? uxSettings = UxSettings();
 
+  /// Capture Camera settings.
+  /// See [CameraSettings] for more detailed information.
   CameraSettings? cameraSettings = CameraSettings();
 
   CaptureSettings();
