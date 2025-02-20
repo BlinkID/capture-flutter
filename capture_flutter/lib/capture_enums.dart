@@ -1,43 +1,62 @@
 import 'package:json_annotation/json_annotation.dart';
 
+/// Document side classification.
+/// Obtained in the [SideCaptureResult] in the [AnalyzerResult] when the capture process has finished.
 enum DocumentSide {
+  /// Capture was not able to determinte the document side.
   @JsonValue(0)
   Unknown,
 
+  /// The front side of the document.
   @JsonValue(1)
   Front,
 
+  /// The back side of the document.
   @JsonValue(2)
   Back
 }
 
+/// Document group classification.
+/// Obtained in the [AnalyzerResult] when the capture process has finished.
 enum DocumentGroup {
+  /// Capture was not able to determinte the document group.
   @JsonValue(0)
   Unknown,
 
+  /// Drivers license document group.
   @JsonValue(1)
   DL,
 
+  /// ID document group.
   @JsonValue(2)
   ID,
 
+  /// Passport document group.
   @JsonValue(3)
   Passport,
 
+  /// Passport card document group.
   @JsonValue(4)
   PassportCard,
 
+  /// VISA document group.
   @JsonValue(5)
   Visa
 }
 
+/// Completeness status of the capture process.
+/// Obtained in the [AnalyzerResult] when the capture process has finished.
 enum CompletnessStatus {
+  /// Status obtained when nothing was captured.
   @JsonValue(0)
   Empty,
 
+  /// Status obtained when one side of the document is missing.
+  /// Triggered for documents that have information on both sides.
   @JsonValue(1)
   OneSideMissing,
 
+  /// Status obtained when the capture process has finished successfully.
   @JsonValue(2)
   Complete
 }
