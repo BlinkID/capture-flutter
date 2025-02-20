@@ -2,6 +2,8 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:capture_flutter/capture_enums.dart';
 part 'package:capture_flutter/capture_settings.g.dart';
 
+/// All available settings for the Capture process.
+/// Contains settings for the Capture analyzer, UX and camera configuration settings.
 @JsonSerializable()
 class CaptureSettings {
   /// Settings for the Capture analyzer.
@@ -143,7 +145,8 @@ class LightingThresholds {
   Map<String, dynamic> toJson() => _$LightingThresholdsToJson(this);
 }
 
-/// Defines Capture's UX settings.
+/// Various Capture UX settings.
+/// Defines the presence of various UI elements, timers and screen options.
 @JsonSerializable()
 class UxSettings {
   /// Defines whether introduction dialog will be displayed on capture start.
