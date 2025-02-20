@@ -33,50 +33,50 @@ class AnalyzerSettings {
   /// document with automatic side detection.
   ///
   /// Default: `false`
-  bool? captureSingleSide;
+  bool? captureSingleSide = false;
 
   /// Defines whether to return an image of a cropped and perspective-corrected document.
   ///
   /// Default: `true`
-  bool? returnTransformedDocumentImage;
+  bool? returnTransformedDocumentImage = true;
 
   /// Configures capture strategy used to select the best frame.
   /// See [CaptureStrategy] enum for more detailed information.
   ///
   /// Default: `CaptureStrategy.Default`
-  CaptureStrategy? captureStrategy;
+  CaptureStrategy? captureStrategy = CaptureStrategy.Default;
 
   /// Sets the required minimum DPI of the captured document on transformed image.
   /// Affects how close the document needs to be to the camera in order to get captured.
   /// Allowed values are from 150 to 400 DPI.
   /// Default: `230`
-  int? minimumDocumentDpi;
+  int? minimumDocumentDpi = 230;
 
   /// Defines whether to automatically adjust minimum document dpi.
   /// If it is enabled, minimum dpi is adjusted to optimal value for provided input resolution
   /// to enable capture of all document groups.
   ///
   /// Default: `true`
-  bool? adjustMinimumDocumentDpi;
+  bool? adjustMinimumDocumentDpi = true;
 
   /// Enables document capture with a margin defined as the percentage
   /// of the dimensions of the framed document.
   /// Both margin and document are required to be fully visible on camera frame in order to finish capture.
   ///
   /// Allowed values are from 0 to 1. Default: `0.01`
-  double? documentFramingMargin;
+  double? documentFramingMargin = 0.01;
 
   /// Defines whether to return an image of the transformed document
   /// with applied margin used during document framing.
   ///
   /// Default: `false`
-  bool? keepMarginOnTransformedDocumentImage;
+  bool? keepMarginOnTransformedDocumentImage = false;
 
   /// Defines whether to preserve the captured document DPI in transformed document image.
   /// If disabled, the document dpi is downscaled to 400 DPI.
   ///
   /// Default: `false`
-  bool? keepDpiOnTransformedDocumentImage;
+  bool? keepDpiOnTransformedDocumentImage = false;
 
   /// Sets the for lighting estimation.
   /// See [LightingThresholds] class for more detailed information.
@@ -88,25 +88,25 @@ class AnalyzerSettings {
   /// See [BlurPolicy] enum for more detailed information.
   ///
   /// Default: `BlurPolicy.Normal`
-  BlurPolicy? blurPolicy;
+  BlurPolicy? blurPolicy = BlurPolicy.Normal;
 
   /// Policy used to discard frames with glare detected on the document.
   /// See [GlarePolicy] enum for more detailed information.
   ///
   /// Default: `GlarePolicy.Normal`
-  GlarePolicy? glarePolicy;
+  GlarePolicy? glarePolicy = GlarePolicy.Normal;
 
   /// Defines percentage of the document area that is allowed to be
   /// occluded by hand.
   ///
   /// Allowed values are from 0 to 1. Default: `0.05`
-  double? handOcclusionThreshold;
+  double? handOcclusionThreshold = 0.05;
 
   /// Policy used to detect tilted documents.
   /// See [TiltPolicy] enum for more detailed information.
   ///
   /// Default: `TiltPolicy.Normal`
-  TiltPolicy? tiltPolicy;
+  TiltPolicy? tiltPolicy = TiltPolicy.Normal;
 
   /// Enforces a specific document group, overriding the analyzer’s document classification.
   /// This setting impacts the number of sides scanned to match the enforced group,
@@ -130,13 +130,13 @@ class LightingThresholds {
   /// If the calculated lighting score is above this threshold, frame is discarded.
   ///
   /// Allowed values are from 0 to 1. Default: `0.99`
-  double? tooDarkThreshold;
+  double? tooDarkThreshold = 0.99;
 
   /// Threshold used to classify the frame as too bright.
   /// If the calculated lighting score is above this threshold, frame is discarded.
   ///
   /// Allowed values are from 0 to 1. Default: `0.99`
-  double? tooBrightThreshold;
+  double? tooBrightThreshold = 0.99;
 
   LightingThresholds();
 
@@ -152,28 +152,28 @@ class UxSettings {
   /// Defines whether introduction dialog will be displayed on capture start.
   ///
   /// Default: `false`
-  bool? showIntroductionDialog;
+  bool? showIntroductionDialog = false;
 
   /// Defines whether onboarding (help) screens will be displayed.
   /// If onboarding is disabled, help button and tooltip won't be displayed.
   ///
   /// Default: `true`
-  bool? showOnboardingInfo;
+  bool? showOnboardingInfo = true;
 
   /// Defines whether the screen will be always ON while capture screen is in foreground.
   ///
   /// Default: `true`
-  bool? keepScreenOn;
+  bool? keepScreenOn = true;
 
   /// Defines whether to show tooltip above help button.
   ///
   /// Default: `true`
-  bool? showCaptureHelpTooltip;
+  bool? showCaptureHelpTooltip = true;
 
   /// Sets the time in milliseconds that needs to pass before help tooltip is displayed.
   ///
   /// Default: `8000` (8 seconds)
-  double? showHelpTooltipTimeIntervalMs;
+  double? showHelpTooltipTimeIntervalMs = 8000;
 
   /// Duration in milliseconds that needs to pass since scanning of the current document side has begun in order to finish side capture.
   /// Timeout timer is restarted on document side flip.
@@ -184,7 +184,7 @@ class UxSettings {
   /// To disable side capture timeout set it to null.
   ///
   /// Default: `15000` (15 seconds)
-  double? sideCaptureTimeoutMs;
+  double? sideCaptureTimeoutMs = 15000;
 
   UxSettings();
 
