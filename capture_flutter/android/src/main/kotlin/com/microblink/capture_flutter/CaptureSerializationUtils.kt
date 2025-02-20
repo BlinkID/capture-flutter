@@ -54,7 +54,7 @@ class CaptureSerializationUtils {
                 captureStrategy = CaptureStrategy.values()[jsonAnalyzerSettings.optInt("captureStrategy", 2)],
                 captureSingleSide = jsonAnalyzerSettings.optBoolean("captureSingleSide", false),
                 documentFramingMargin = jsonAnalyzerSettings.optDouble("documentFramingMargin", 0.01).toFloat(),
-                enforcedDocumentGroup = (if (jsonAnalyzerSettings.isNull("enforcedDocumentGroup")) null else EnforcedDocumentGroup.values()[jsonAnalyzerSettings.optInt("enforcedDocumentGroup")]),
+                enforcedDocumentGroup = deserializeEnforcedDocumentGroup(jsonAnalyzerSettings.optInt("enforcedDocumentGroup", 0)),
                 glarePolicy = GlarePolicy.values()[jsonAnalyzerSettings.optInt("glarePolicy", 2)],
                 handOcclusionThreshold = jsonAnalyzerSettings.optDouble("handOcclusionThreshold", 0.05).toFloat(),
                 keepDpiOnTransformedDocumentImage = jsonAnalyzerSettings.optBoolean("keepDpiOnTransformedDocumentImage", false),
@@ -90,6 +90,13 @@ class CaptureSerializationUtils {
                 throw error
             }
         }
+    }
+
+    private fun deserializeEnforcedDocumentGroup(jsonEnforcedDocumentGroupValue: Int?): EnforcedDocumentGroup? {
+        if (jsonEnforcedDocumentGroupValue == null || jsonEnforcedDocumentGroupValue == 0) {
+            return null
+        }
+        return EnforcedDocumentGroup.values()[jsonEnforcedDocumentGroupValue - 1]
     }
 
     private fun encodeBase64Image(image: Bitmap?): String? {
