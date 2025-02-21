@@ -1,16 +1,10 @@
-# capture_flutter_example
+<p align="center" >
+  <img src="https://raw.githubusercontent.com/wiki/blinkid/blinkid-android/images/logo-microblink.png" alt="Microblink" title="Microblink">
+</p>
 
-Demonstrates how to use the capture_flutter plugin.
+# Tesing the _Capture_ Flutter plugin
 
-## Getting Started
+To test out the Capture plugin, please follow the instructions here in the main README.md file, in the sections '[Quickstart with the sample application](https://github.com/BlinkID/capture-flutter?tab=readme-ov-file#quickstart-with-the-sample-application)' and '[Integration](https://github.com/BlinkID/capture-flutter?tab=readme-ov-file#integration)'.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## <a name="additional-information"></a> Additional information
+For any additional questions and information, feel free to contact us [here](https://help.microblink.com).
