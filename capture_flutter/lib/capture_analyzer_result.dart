@@ -47,7 +47,7 @@ class SideCaptureResult {
   String? transformedImage;
 
   /// Contains the document side classification.
-  /// If side classification was uncertain, the Unknown is returned.
+  /// If side classification was uncertain, `Unknown` is returned.
   /// See [DocumentSide] enum for more detailed information.
   DocumentSide? side;
 

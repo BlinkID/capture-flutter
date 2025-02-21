@@ -18,6 +18,8 @@ class CaptureSettings {
   /// See [CameraSettings] for more detailed information.
   CameraSettings? cameraSettings = CameraSettings();
 
+  /// All available settings for the Capture process.
+  /// Contains settings for the Capture analyzer, UX and camera configuration settings.
   CaptureSettings();
 
   factory CaptureSettings.fromJson(Map<String, dynamic> json) =>
@@ -116,6 +118,8 @@ class AnalyzerSettings {
   /// Default: `null`
   EnforcedDocumentGroup? enforcedDocumentGroup;
 
+  /// Settings for the Capture analyzer.
+  /// Used for setting capture strategies and scanning parameters.
   AnalyzerSettings();
 
   factory AnalyzerSettings.fromJson(Map<String, dynamic> json) =>
@@ -138,6 +142,7 @@ class LightingThresholds {
   /// Allowed values are from 0 to 1. Default: `0.99`
   double? tooBrightThreshold = 0.99;
 
+  /// Defines the parameters for lighting estimation.
   LightingThresholds();
 
   factory LightingThresholds.fromJson(Map<String, dynamic> json) =>
@@ -186,6 +191,8 @@ class UxSettings {
   /// Default: `15000` (15 seconds)
   double? sideCaptureTimeoutMs = 15000;
 
+  /// Various Capture UX settings.
+  /// Defines the presence of various UI elements, timers and screen options.
   UxSettings();
 
   factory UxSettings.fromJson(Map<String, dynamic> json) =>
@@ -216,6 +223,8 @@ class CameraSettings {
   /// Default: `IosCameraResolution.Resolution1080p`
   IosCameraResolution iosCameraResolution = IosCameraResolution.Resolution1080p;
 
+  /// Defines Capture's Camera configuration options.
+  /// Settings for camera resolution, separately for iOS and Android devices.
   CameraSettings();
 
   factory CameraSettings.fromJson(Map<String, dynamic> json) =>
