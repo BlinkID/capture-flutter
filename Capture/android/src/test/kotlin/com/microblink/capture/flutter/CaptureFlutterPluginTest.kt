@@ -1,4 +1,4 @@
-package com.microblink.capture_flutter
+package com.microblink.capture.flutter
 
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel

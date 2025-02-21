@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.microblink.capture_flutter">
+  package="com.microblink.capture.flutter">
     <application>
-        <activity android:name=".CaptureActivity"
+        <activity android:name="com.microblink.capture.flutter.CaptureActivity"
             android:exported="true"
             android:theme="@style/MB_theme_capture">
             <intent-filter>

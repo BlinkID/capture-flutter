@@ -15,7 +15,7 @@ IS_LOCAL_BUILD=true || exit 1
 if [ "$IS_LOCAL_BUILD" = true ]; then
   # add capture_flutter dependency with local path to pubspec.yaml
   perl -i~ -pe "BEGIN{$/ = undef;} s/dependencies:\n  flutter:\n    sdk: flutter/dependencies:\n  flutter:\n    sdk: flutter\n  capture_flutter:\n    path: ..\/Capture/" pubspec.yaml
-  echo "Using blinkid_flutter from this repo instead from flutter pub"
+  echo "Using capture_flutter from this repo instead from flutter pub"
 else
   # add capture_flutter dependency to pubspec.yaml
   perl -i~ -pe "BEGIN{$/ = undef;} s/dependencies:\n  flutter:\n    sdk: flutter/dependencies:\n  flutter:\n    sdk: flutter\n  capture_flutter/" pubspec.yaml

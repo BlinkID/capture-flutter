@@ -1,4 +1,4 @@
-package com.microblink.capture_flutter
+package com.microblink.capture.flutter
 
 import android.content.Context
 import android.graphics.Bitmap

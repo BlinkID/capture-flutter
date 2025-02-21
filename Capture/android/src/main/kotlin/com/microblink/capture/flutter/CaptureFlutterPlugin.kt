@@ -1,9 +1,8 @@
-package com.microblink.capture_flutter
+package com.microblink.capture.flutter
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import com.microblink.capture.CaptureSDK
 import com.microblink.capture.licence.exception.LicenceKeyException
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -13,7 +12,6 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.ActivityResultListener
-import org.json.JSONObject
 
 /** CaptureFlutterPlugin */
 class CaptureFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware, ActivityResultListener {

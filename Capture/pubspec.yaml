@@ -38,7 +38,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.microblink.capture_flutter
+        package: com.microblink.capture.flutter
         pluginClass: CaptureFlutterPlugin
       ios:
         pluginClass: CaptureFlutterPlugin
