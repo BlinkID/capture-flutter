@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.description      = <<-DESC
 A new Flutter plugin project.
                        DESC
-  s.homepage         = 'http://microblink.com'
+  s.homepage         = 'https://microblink.com'
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Milan Paradina' => 'milan.paradina@microblink.com' }
   s.source           = { :path => '.' }
