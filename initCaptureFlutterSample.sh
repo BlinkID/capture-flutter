@@ -49,5 +49,4 @@ echo "To run on Android type: flutter run"
 echo "To run on iOS:
 1. Open $appName/ios/Runner.xcworkspace
 2. Set your development team
-3. Add the NSCameraUsageDescription & NSPhotoLibraryUsageDescription keys to the Runner/Info.plist file
-4. Press run"
+3. Press run"
