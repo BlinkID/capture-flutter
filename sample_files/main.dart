@@ -40,13 +40,14 @@ class _MyAppState extends State<MyApp> {
       settings.analyzerSettings?.captureStrategy = CaptureStrategy.Default;
       settings.analyzerSettings?.documentFramingMargin = 0.01;
       settings.analyzerSettings?.keepMarginOnTransformedDocumentImage = true;
-      // settings.analyzerSettings?.enforcedDocumentGroup = EnforcedDocumentGroup.;
-      //   settings.analyzerSettings?.lightingThresholds.tooBrightThreshold = 0.99;
-      //   settings.analyzerSettings?.lightingThresholds.tooDarkThreshold = 0.99;
+      settings.analyzerSettings?.enforcedDocumentGroup =
+          EnforcedDocumentGroup.None;
 
       // modify Camera settings
       settings.cameraSettings?.iosCameraResolution =
-          IosCameraResolution.Resolution4K;
+          IosCameraResolution.Resolution1080p;
+      settings.cameraSettings?.androidCameraResolution =
+          AndroidCameraResolution.Resolution2160P;
 
       // add the license key
       var licenseKey = "";
@@ -85,9 +86,13 @@ class _MyAppState extends State<MyApp> {
       }
     } catch (captureError) {
       if (captureError is PlatformException) {
+        var message = captureError.message;
         setState(() {
-          var message = captureError.message;
           resultString = "Capture error: $message";
+          firstCapturedImage = null;
+          firstTransformedImage = null;
+          secondCapturedImage = null;
+          secondTransformedImage = null;
         });
       }
     }
@@ -110,9 +115,9 @@ class _MyAppState extends State<MyApp> {
         buildAnalyzerResult(
             result?.firstCapture?.dpiAdjusted, "First capture DPI adjusted") +
         buildAnalyzerResult(
-            result?.secondCapture?.side, "Second capture side") +
+            result?.secondCapture?.side.toString(), "Second capture side") +
         buildAnalyzerResult(
-            result?.secondCapture?.dpiAdjusted, "Second capture DPI adjusted ");
+            result?.secondCapture?.dpiAdjusted, "Second capture DPI adjusted");
   }
 
   String buildAnalyzerResult(dynamic result, String propertyName) {
