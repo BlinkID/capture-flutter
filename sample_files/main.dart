@@ -65,19 +65,23 @@ class _MyAppState extends State<MyApp> {
       var results = await capturePlugin.scanWithCamera(settings, licenseKey);
 
       // get the results
-      if (results?.completnessStatus == CompletnessStatus.Complete) {
+      if (results?.completnessStatus == CompletenessStatus.Complete) {
         setState(() {
           resultString = getCaptureStringResult(results);
-          firstCapturedImage =
-              base64Decode(getImage(results?.firstCapture?.capturedImage));
-          firstTransformedImage =
-              base64Decode(getImage(results?.firstCapture?.transformedImage));
+          firstCapturedImage = base64Decode(
+            getImage(results?.firstCapture?.capturedImage),
+          );
+          firstTransformedImage = base64Decode(
+            getImage(results?.firstCapture?.transformedImage),
+          );
 
           if (results?.secondCapture?.capturedImage != null) {
-            secondCapturedImage =
-                base64Decode(getImage(results?.secondCapture?.capturedImage));
+            secondCapturedImage = base64Decode(
+              getImage(results?.secondCapture?.capturedImage),
+            );
             secondTransformedImage = base64Decode(
-                getImage(results?.secondCapture?.transformedImage));
+              getImage(results?.secondCapture?.transformedImage),
+            );
           } else {
             secondCapturedImage = null;
             secondTransformedImage = null;
@@ -108,16 +112,23 @@ class _MyAppState extends State<MyApp> {
 
   String getCaptureStringResult(AnalyzerResult? result) {
     return buildAnalyzerResult(
-            result?.completnessStatus, "Completness status") +
+          result?.completnessStatus,
+          "Completeness status",
+        ) +
         buildAnalyzerResult(result?.documentGroup, "Document group") +
+        buildAnalyzerResult(result?.firstCapture?.side, "First capture side") +
         buildAnalyzerResult(
-            result?.firstCapture?.side.toString(), "First capture side") +
+          result?.firstCapture?.dpiAdjusted,
+          "First capture DPI adjusted",
+        ) +
         buildAnalyzerResult(
-            result?.firstCapture?.dpiAdjusted, "First capture DPI adjusted") +
+          result?.secondCapture?.side,
+          "Second capture side",
+        ) +
         buildAnalyzerResult(
-            result?.secondCapture?.side.toString(), "Second capture side") +
-        buildAnalyzerResult(
-            result?.secondCapture?.dpiAdjusted, "Second capture DPI adjusted");
+          result?.secondCapture?.dpiAdjusted,
+          "Second capture DPI adjusted",
+        );
   }
 
   String buildAnalyzerResult(dynamic result, String propertyName) {
@@ -131,9 +142,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text("Capture Sample"),
-        ),
+        appBar: AppBar(title: const Text("Capture Sample")),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
           child: Column(

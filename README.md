@@ -113,7 +113,7 @@ if (Theme.of(context).platform == TargetPlatform.iOS) {
 // Add the license key and the Capture settings in the scanWithCamera method
 var results = await capturePlugin.scanWithCamera(settings,licenseKey);
 
-if (results?.completnessStatus == CompletnessStatus.Complete) {
+if (results?.completenessStatus == CompletenessStatus.Complete) {
   // handle the obtained results
   print(result?.documentGroup);
 }

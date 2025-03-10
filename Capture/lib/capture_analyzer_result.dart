@@ -1,6 +1,7 @@
 import 'capture_enums.dart';
 
 /// The result of the capture analysis.
+///
 /// Contains the information about each document side,
 /// completeness status of the capture process and the document group.
 class AnalyzerResult {
@@ -18,8 +19,12 @@ class AnalyzerResult {
 
   /// Contains the completeness status of the capture process.
   /// See [CompletenessStatus] for more information.
-  CompletenessStatus? completnessStatus;
+  CompletenessStatus? completenessStatus;
 
+  /// The result of the capture analysis.
+  ///
+  /// Contains the information about each document side,
+  /// completeness status of the capture process and the document group.
   AnalyzerResult(Map<String, dynamic> nativeAnalyzerResult) {
     this.firstCapture = nativeAnalyzerResult['nativeFirstCapture'] != null
         ? SideCaptureResult(Map<String, dynamic>.from(
@@ -31,12 +36,15 @@ class AnalyzerResult {
         : null;
     this.documentGroup =
         DocumentGroup.values[nativeAnalyzerResult['nativeDocumentGroup']];
-    this.completnessStatus = CompletenessStatus
+    this.completenessStatus = CompletenessStatus
         .values[nativeAnalyzerResult['nativeCompletenessStatus']];
   }
 }
 
 /// Result of the document side capture.
+///
+/// Contains the original and transformed image of the captured document side and
+/// the information about the document side and DPI.
 class SideCaptureResult {
   /// Contains the original image of the captured document,
   /// untransformed, as it was used in analysis.
@@ -55,6 +63,10 @@ class SideCaptureResult {
   /// If the document is captured at a lower dpi than the `minimumDocumentDpi` in [AnalyzerSettings], the property is set to `true`.
   bool? dpiAdjusted;
 
+  /// Result of the document side capture.
+  ///
+  /// Contains the original and transformed image of the captured document side and
+  /// the information about the document side and DPI.
   SideCaptureResult(Map<String, dynamic> nativeCaptureResult) {
     this.capturedImage = nativeCaptureResult['nativeCapturedImage'] != null
         ? nativeCaptureResult['nativeCapturedImage']
