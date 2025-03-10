@@ -24,11 +24,6 @@ fi
 
 flutter pub get
 
-# enter into android project folder
-pushd android
-
-popd
-
 # enter into ios project folder
 pushd ios
 
