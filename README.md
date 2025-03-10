@@ -3,11 +3,11 @@
 </p>
 
 # _Capture_ Flutter plugin
-A Flutter plugin for Microblink's Capture SDK, an SDK used for auto-capturing high quality images of identity documents in a user-friendly way.
+A Flutter plugin for Microblink's Capture SDK, an SDK used for auto-capturing high-quality images of identity documents in a user-friendly way.
 
-The SDK provides you with a rectified image of the document that ensures high success rate in extracting document text or verifying the document validity.
+The SDK provides you with a rectified image of the document, which ensures a high success rate in extracting document text or verifying document validity.
 
-User is guided to avoid glare, blurred images, bad lighting conditions, fingers over the document or too much tilt. The SDK is able to recognize if a document is single sided (i.e. passport) or double sided (i.e. driving license) and prompt the user to scan the back side of the document when needed.
+The user is guided to avoid glare, blurred images, bad lighting conditions, fingers over the document, or too much tilt. The SDK recognizes if a document is single-sided (e.g., a passport) or double-sided (e.g., a driving license) and prompts the user to scan the back side of the document when needed.
 
 In the results, you can get a cropped, perspective-corrected image of the document, along with the original frame. Those can be processed by your app in any way required. The SDK is lightweight and can be easily integrated into your mobile app and bland in your design.
 
@@ -26,19 +26,19 @@ In the results, you can get a cropped, perspective-corrected image of the docume
 
 ## <a name="requirements"></a> Requirements
 The Capture Flutter plugin is built with Flutter v3.24.2.
-All of the versions and depencies of the capture_flutter plugin can be viewed in the [pubsec.yaml](https://github.com/BlinkID/capture-flutter/blob/main/Capture/pubspec.yaml) file.
+All of the versions and dependencies of the `capture_flutter` plugin can be viewed in the [pubsec.yaml](https://github.com/BlinkID/capture-flutter/blob/main/Capture/pubspec.yaml) file.
 
 The plugin has requirements on the native iOS & Android end, which can be viewed here:
 
-|   Requirement  	|         iOS        	|          Android         	|
-|:--------------:	|:------------------:	|:------------------------:	|
-| OS/API version 	| iOS 13.0 and newer 	| API version 21 and newer 	|
-| Camera quality 	| At least 1080p     	| At least 1080p           	|
+|   Requirement      |         iOS            |          Android             |
+|:--------------:    |:------------------:    |:------------------------:    |
+| OS/API version     | iOS 13.0 and newer     | API version 21 and newer     |
+| Camera quality     | At least 1080p         | At least 1080p               |
 
-For more detailed information about the device requirements, go to the native documention here for [iOS](https://github.com/BlinkID/capture-ios?tab=readme-ov-file#-requirements) and [Android](https://github.com/BlinkID/capture-android?tab=readme-ov-file#-device-requirements).
+For more detailed information about the device requirements, see the native documentation here for [iOS](https://github.com/BlinkID/capture-ios?tab=readme-ov-file#-requirements) and [Android](https://github.com/BlinkID/capture-android?tab=readme-ov-file#-device-requirements).
 
 ## <a name="quickstart-with-the-sample-application"></a> Quickstart with the sample application
-The sample application demonstrates how the Capture SDK is implemented, used and how to obtain the captured results.
+The sample application demonstrates how the Capture SDK is implemented and used and how to obtain the captured results.
 
 To run it follow the steps:
 1. Git clone the repository:
@@ -68,7 +68,7 @@ dependencies:
 ```
 
 ## <a name="plugin-usage"></a> Plugin usage
-1. After the dependency has been added to the project, firstly add the neccessery imports:
+1. After the dependency has been added to the project, first add the necessary imports:
 ```dart
 import 'package:capture_flutter/capture_flutter.dart';
 import 'package:capture_flutter/capture_settings.dart';
@@ -79,7 +79,7 @@ import 'package:capture_flutter/capture_analyzer_result.dart';
 ```dart
 final capturePlugin = CaptureFlutter();
 ```
-3. Set all of the neccessary Capture settings (Analyzer, UX and Camera). You do not need to modify anything from these settings:
+3. Set all of the necessary Capture settings (Analyzer, UX, and Camera). You do not need to modify anything from these settings:
 ```dart
 // Create Capture settings
 final settings = CaptureSettings();
@@ -128,7 +128,7 @@ Plugin implementation is located in the `lib` folder, while platform-specific im
 ### <a name="capture-settings"></a> Capture Settings
 With the `CaptureSettings` class, Capture's `AnalyzerSettings`, `UxSettings` and `CameraSettings` can be modified.
 
-All of the settings that can be modified, along with the explanation of what each setting does, can be found in the [capture_settings.dart](https://github.com/BlinkID/capture-flutter/blob/main/Capture/lib/capture_settings.dart) file.
+The [capture_settings.dart](https://github.com/BlinkID/capture-flutter/blob/main/Capture/lib/capture_settings.dart) file contains all the settings that can be modified and explains what each setting does.
 
 The native implementation of the `CaptureSettings` can be found here:
 - iOS:
@@ -142,7 +142,7 @@ The native implementation of the `CaptureSettings` can be found here:
   - [UX Settings](https://github.com/BlinkID/capture-flutter/blob/main/Capture/android/src/main/kotlin/com/microblink/capture_flutter/CaptureSerializationUtils.kt#L70)
   - [Camera Settings](https://github.com/BlinkID/capture-flutter/blob/develop/Capture/android/src/main/kotlin/com/microblink/capture_flutter/CaptureSerializationUtils.kt#L77)
 
-For a more detailed explanation about the Capture Settings, go to the native documentation here for [iOS](https://blinkid.github.io/capture-ux-sp/documentation/captureux/mbiccapturesettings) and [Android](https://blinkid.github.io/capture-android/capture-ux/com.microblink.capture.settings/-capture-settings/index.html).
+For a more detailed explanation of the Capture Settings, go to the native documentation here for [iOS](https://blinkid.github.io/capture-ux-sp/documentation/captureux/mbiccapturesettings) and [Android](https://blinkid.github.io/capture-android/capture-ux/com.microblink.capture.settings/-capture-settings/index.html).
 
 ### <a name="analyzer-result"></a> Analyzer Result
 The `AnalyzerResult` class represents the result of the capture process, and it is available after the scanning process finishes.
@@ -153,10 +153,10 @@ The native implementation of the `AnalyzerResult` can be found here:
 - [iOS](https://github.com/BlinkID/capture-flutter/blob/main/Capture/ios/Classes/CaptureSerializationUtils.swift#L11)
 - [Android](https://github.com/BlinkID/capture-flutter/blob/main/Capture/android/src/main/kotlin/com/microblink/capture_flutter/CaptureSerializationUtils.kt#L23)
 
-For a more detailed explanation about the Analyzer Result, go to the native documentation here for [iOS](https://blinkid.github.io/capture-core-sp/documentation/capturecore/mbccanalyzerresult) and [Android](https://blinkid.github.io/capture-android/capture-core/com.microblink.capture.result/-analyzer-result/index.html?query=class%20AnalyzerResult).
+For a more detailed explanation of the Analyzer Result, go to the native documentation here for [iOS](https://blinkid.github.io/capture-core-sp/documentation/capturecore/mbccanalyzerresult) and [Android](https://blinkid.github.io/capture-android/capture-core/com.microblink.capture.result/-analyzer-result/index.html?query=class%20AnalyzerResult).
 
 ## <a name="licensing"></a> Licensing
-A valid license key is required to initialize the Capture plugin. A free trial license key can be requsted after registering at [Microblink Developer Hub](https://developer.microblink.com/).
+A valid license key is required to initialize the Capture plugin. A free trial license key can be requested after registering at [Microblink Developer Hub](https://developer.microblink.com/).
 
 ## <a name="additional-information"></a> Additional information
 For any additional questions and information, feel free to contact us [here](https://help.microblink.com).
