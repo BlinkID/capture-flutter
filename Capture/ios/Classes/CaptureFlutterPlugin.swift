@@ -29,19 +29,28 @@ public class CaptureFlutterPlugin: NSObject, FlutterPlugin {
                 let (isKeyValid, licenseErrorString) = CaptureSerializationUtils.deserializeLicenseKey(licenseKey)
                 if isKeyValid {
                     if let captureSettings = args["captureSettings"] as? Dictionary<String, Any> {
-                        let captureVC = MBICCaptureViewController(captureSettings: CaptureSerializationUtils.deserializeCaptureSettings(captureSettings))
+                        let captureVC = MBICCaptureViewController(
+                            captureSettings: CaptureSerializationUtils
+                                .deserializeCaptureSettings(captureSettings)
+                        )
                         captureVC.delegate = self
                         captureVC.modalPresentationStyle = .fullScreen
                         let rootVc = UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController
                         rootVc?.present(captureVC, animated: true)
                     } else {
-                        self.result!(FlutterError(code: iosCaptureError, message: "Incorrectly set Capture Settings!", details: nil))
+                        self.result?(FlutterError(code: iosCaptureError, message: "Incorrectly set Capture Settings", details: nil))
                     }
                 } else {
-                    self.result!(FlutterError(code: iosLicenseKeyError, message: licenseErrorString, details: nil))
+                    self.result?(
+                        FlutterError(
+                            code: iosLicenseKeyError,
+                            message: licenseErrorString,
+                            details: nil
+                        )
+                    )
                 }
             } else {
-                self.result!(FlutterError(code: iosLicenseKeyError, message: "Invalid license key!", details: nil))
+                self.result?(FlutterError(code: iosLicenseKeyError, message: "Invalid license key", details: nil))
             }
         }
     }
@@ -49,9 +58,7 @@ public class CaptureFlutterPlugin: NSObject, FlutterPlugin {
 
 extension CaptureFlutterPlugin: MBICCaptureViewControllerDelegate {
     public func captureViewController(captureViewController: MBICCaptureViewController, didFinishCaptureWithResult analyzerResult: MBCCAnalyzerResult) {
-        if let result = result {
-            result(CaptureSerializationUtils.serializeResult(analyzerResult))
-        }
+        result?(CaptureSerializationUtils.serializeResult(analyzerResult))
         
         DispatchQueue.main.async {
             captureViewController.dismiss(animated: true)

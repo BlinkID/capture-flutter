@@ -48,22 +48,22 @@ class AnalyzerSettings {
   /// Default: `CaptureStrategy.Default`
   CaptureStrategy? captureStrategy = CaptureStrategy.Default;
 
-  /// Sets the required minimum DPI of the captured document on transformed image.
+  /// Sets the required minimum DPI of the captured document on the transformed image.
   /// Affects how close the document needs to be to the camera in order to get captured.
   /// Allowed values are from 150 to 400 DPI.
   /// Default: `230`
   int? minimumDocumentDpi = 230;
 
   /// Defines whether to automatically adjust minimum document dpi.
-  /// If it is enabled, minimum dpi is adjusted to optimal value for provided input resolution
-  /// to enable capture of all document groups.
+  /// If it is enabled, the minimum dpi is adjusted to the optimal value for the provided input resolution
+  /// to enable the capture of all document groups.
   ///
   /// Default: `true`
   bool? adjustMinimumDocumentDpi = true;
 
   /// Enables document capture with a margin defined as the percentage
   /// of the dimensions of the framed document.
-  /// Both margin and document are required to be fully visible on camera frame in order to finish capture.
+  /// Both margin and document are required to be fully visible on the camera frame in order to finish capture.
   ///
   /// Allowed values are from 0 to 1. Default: `0.01`
   double? documentFramingMargin = 0.01;
@@ -74,7 +74,7 @@ class AnalyzerSettings {
   /// Default: `false`
   bool? keepMarginOnTransformedDocumentImage = false;
 
-  /// Defines whether to preserve the captured document DPI in transformed document image.
+  /// Defines whether to preserve the captured document DPI in the transformed document image.
   /// If disabled, the document dpi is downscaled to 400 DPI.
   ///
   /// Default: `false`
@@ -98,7 +98,7 @@ class AnalyzerSettings {
   /// Default: `GlarePolicy.Normal`
   GlarePolicy? glarePolicy = GlarePolicy.Normal;
 
-  /// Defines percentage of the document area that is allowed to be
+  /// Defines the percentage of the document area that is allowed to be
   /// occluded by hand.
   ///
   /// Allowed values are from 0 to 1. Default: `0.05`
@@ -113,7 +113,7 @@ class AnalyzerSettings {
   /// Enforces a specific document group, overriding the analyzer’s document classification.
   /// This setting impacts the number of sides scanned to match the enforced group,
   /// and the way document image is transformed.
-  /// If set to null, document group won't be enforced  and it will be auto-detected.
+  /// If set to null, the document group won't be enforced and it will be auto-detected.
   ///
   /// Default: `null`
   EnforcedDocumentGroup? enforcedDocumentGroup;
@@ -131,13 +131,13 @@ class AnalyzerSettings {
 @JsonSerializable()
 class LightingThresholds {
   /// Threshold used to classify the frame as too dark.
-  /// If the calculated lighting score is above this threshold, frame is discarded.
+  /// If the calculated lighting score is above this threshold, the frame is discarded.
   ///
   /// Allowed values are from 0 to 1. Default: `0.99`
   double? tooDarkThreshold = 0.99;
 
   /// Threshold used to classify the frame as too bright.
-  /// If the calculated lighting score is above this threshold, frame is discarded.
+  /// If the calculated lighting score is above this threshold, the frame is discarded.
   ///
   /// Allowed values are from 0 to 1. Default: `0.99`
   double? tooBrightThreshold = 0.99;
@@ -151,48 +151,49 @@ class LightingThresholds {
 }
 
 /// Various Capture UX settings.
-/// Defines the presence of various UI elements, timers and screen options.
+/// Defines the presence of various UI elements, timers, and screen options.
 @JsonSerializable()
 class UxSettings {
-  /// Defines whether introduction dialog will be displayed on capture start.
+  /// Defines whether the introduction dialog will be displayed on capture start.
   ///
   /// Default: `false`
   bool? showIntroductionDialog = false;
 
   /// Defines whether onboarding (help) screens will be displayed.
-  /// If onboarding is disabled, help button and tooltip won't be displayed.
+  /// If onboarding is disabled, the help button and tooltip won't be displayed.
   ///
   /// Default: `true`
   bool? showOnboardingInfo = true;
 
-  /// Defines whether the screen will be always ON while capture screen is in foreground.
+  /// Defines whether the screen will always be ON while the capture screen is in the foreground.
   ///
   /// Default: `true`
   bool? keepScreenOn = true;
 
-  /// Defines whether to show tooltip above help button.
+  /// Defines whether to show the tooltip above the help button.
   ///
   /// Default: `true`
   bool? showCaptureHelpTooltip = true;
 
-  /// Sets the time in milliseconds that needs to pass before help tooltip is displayed.
+  /// Sets the time in milliseconds that needs to pass before the help tooltip is displayed.
   ///
   /// Default: `8000` (8 seconds)
   double? showHelpTooltipTimeIntervalMs = 8000;
 
   /// Duration in milliseconds that needs to pass since scanning of the current document side has begun in order to finish side capture.
-  /// Timeout timer is restarted on document side flip.
+  /// The timeout timer is restarted on the document side flip.
   ///
   /// Please be aware that time counting does not start from the moment when capture process starts.
-  /// Instead it starts from the moment when at least one valid frame candidate for the current document side has entered the analysis queue.
-  /// The reason for this is the better user experience in cases when for example timeout is set to 10 seconds and user starts scanning and leaves device lying on table for 9 seconds and then points the device towards the document it wants to capture: in such case it is better to let the user to capture the document.
+  /// Instead, it starts from the moment when at least one valid frame candidate for the current document side enters the analysis queue.
+  /// The reason for this is the better user experience in cases when, for example, the timeout is set to 10 seconds and the user starts scanning, leaves the device lying on the
+  /// table for 9 seconds, and then points the device towards the document it wants to capture: in such a case, it is better to let the user capture the document.
   /// To disable side capture timeout set it to null.
   ///
   /// Default: `15000` (15 seconds)
   double? sideCaptureTimeoutMs = 15000;
 
   /// Various Capture UX settings.
-  /// Defines the presence of various UI elements, timers and screen options.
+  /// Defines the presence of various UI elements, timers, and screen options.
   UxSettings();
 
   factory UxSettings.fromJson(Map<String, dynamic> json) =>
@@ -206,7 +207,9 @@ class UxSettings {
 class CameraSettings {
   /// Sets the camera resolution for Android devices.
   ///
-  /// Represents the preferred camera resolution. It does not mean that exact the same resolution will be selected, but SDK will use the nearest one possible. Actual resolution that will be chosen depends on the actual device hardware (camera resolutions available and processing power).
+  /// This represents the preferred camera resolution.
+  /// It does not mean that the exact same resolution will be selected, but SDK will use the nearest one possible.
+  /// The actual resolution that will be chosen depends on the actual device hardware (camera resolutions available and processing power).
   ///
   /// See [AndroidCameraResolution] for all options.
   ///
@@ -216,7 +219,9 @@ class CameraSettings {
 
   /// Sets the camera resolution for iOS devices.
   ///
-  /// Represents the preferred camera resolution. It does not mean that exact the same resolution will be selected, but SDK will use the nearest one possible. Actual resolution that will be chosen depends on the actual device hardware (camera resolutions available and processing power).
+  /// This represents the preferred camera resolution.
+  /// It does not mean that the exact same resolution will be selected, but SDK will use the nearest one possible.
+  /// The actual resolution that will be chosen depends on the actual device hardware (camera resolutions available and processing power).
   ///
   /// See [IosCameraResolution] for all options.
   ///

@@ -2,7 +2,7 @@ import 'capture_enums.dart';
 
 /// The result of the capture analysis.
 /// Contains the information about each document side,
-/// completness status of the capture process, and the document group.
+/// completeness status of the capture process and the document group.
 class AnalyzerResult {
   /// Contains the result of the first side capture.
   /// See [SideCaptureResult] for more detailed information.
@@ -17,8 +17,8 @@ class AnalyzerResult {
   DocumentGroup? documentGroup;
 
   /// Contains the completeness status of the capture process.
-  /// See [CompletnessStatus] for more information.
-  CompletnessStatus? completnessStatus;
+  /// See [CompletenessStatus] for more information.
+  CompletenessStatus? completnessStatus;
 
   AnalyzerResult(Map<String, dynamic> nativeAnalyzerResult) {
     this.firstCapture = nativeAnalyzerResult['nativeFirstCapture'] != null
@@ -31,8 +31,8 @@ class AnalyzerResult {
         : null;
     this.documentGroup =
         DocumentGroup.values[nativeAnalyzerResult['nativeDocumentGroup']];
-    this.completnessStatus = CompletnessStatus
-        .values[nativeAnalyzerResult['nativeCompletnessStatus']];
+    this.completnessStatus = CompletenessStatus
+        .values[nativeAnalyzerResult['nativeCompletenessStatus']];
   }
 }
 
@@ -43,7 +43,7 @@ class SideCaptureResult {
   String? capturedImage;
 
   /// Contains the image of a cropped and perspective-corrected document.
-  /// Transformed image is returned in the correct orientation.
+  /// The transformed image is returned in the correct orientation.
   String? transformedImage;
 
   /// Contains the document side classification.
@@ -52,7 +52,7 @@ class SideCaptureResult {
   DocumentSide? side;
 
   /// Indicates whether DPI was adjusted.
-  /// If document is captured at lower dpi than the `minimumDocumentDpi` in [AnalyzerSettings], the property is set to `true`.
+  /// If the document is captured at a lower dpi than the `minimumDocumentDpi` in [AnalyzerSettings], the property is set to `true`.
   bool? dpiAdjusted;
 
   SideCaptureResult(Map<String, dynamic> nativeCaptureResult) {

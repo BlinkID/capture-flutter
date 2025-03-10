@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 /// Document side classification.
 /// Obtained in the [SideCaptureResult] in the [AnalyzerResult] when the capture process has finished.
 enum DocumentSide {
-  /// Capture was not able to determinte the document side.
+  /// Capture was not able to determine the document side.
   @JsonValue(0)
   Unknown,
 
@@ -19,7 +19,7 @@ enum DocumentSide {
 /// Document group classification.
 /// Obtained in the [AnalyzerResult] when the capture process has finished.
 enum DocumentGroup {
-  /// Capture was not able to determinte the document group.
+  /// Capture was not able to determine the document group.
   @JsonValue(0)
   Unknown,
 
@@ -46,7 +46,7 @@ enum DocumentGroup {
 
 /// Completeness status of the capture process.
 /// Obtained in the [AnalyzerResult] when the capture process has finished.
-enum CompletnessStatus {
+enum CompletenessStatus {
   /// Status obtained when nothing was captured.
   @JsonValue(0)
   Empty,
@@ -138,7 +138,7 @@ enum TiltPolicy {
   Disabled,
 
   /// Strict tilt detection.
-  /// Enables capture of document with minimum tilt tolerance.
+  /// Enables capture of the document with minimum tilt tolerance.
   @JsonValue(1)
   Strict,
 
@@ -156,12 +156,12 @@ enum TiltPolicy {
 /// Enforces a specific document group, overriding the analyzer’s document classification.
 /// Used in [AnalyzerSettings] when setting [CaptureSettings].
 enum EnforcedDocumentGroup {
-  /// Disables enforing specific document groups
+  /// Disables enforcing specific document groups
   /// Default EnforcedDocumentGroup.
   @JsonValue(0)
   None,
 
-  /// Enforces drivers license document groups.
+  /// Enforces driver's license document groups.
   @JsonValue(1)
   Dl,
 

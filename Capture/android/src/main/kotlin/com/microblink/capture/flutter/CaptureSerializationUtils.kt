@@ -50,7 +50,7 @@ object CaptureSerializationUtils {
         jsonAnalyzerResult.put("nativeSecondCapture", jsonSecondSideResult)
 
         jsonAnalyzerResult.put("nativeDocumentGroup", analyzerResult.documentGroup.ordinal)
-        jsonAnalyzerResult.put("nativeCompletnessStatus", analyzerResult.completenessStatus.ordinal)
+        jsonAnalyzerResult.put("nativeCompletenessStatus", analyzerResult.completenessStatus.ordinal)
         return jsonAnalyzerResult
     }
 

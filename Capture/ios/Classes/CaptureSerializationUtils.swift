@@ -26,7 +26,7 @@ class CaptureSerializationUtils {
         
         dict["nativeSecondCapture"] = captureSecondSideDict
         dict["nativeDocumentGroup"] = analyzerResult.documentGroup.rawValue
-        dict["nativeCompletnessStatus"] = analyzerResult.completnessStatus.rawValue
+        dict["nativeCompletenessStatus"] = analyzerResult.completnessStatus.rawValue
         
         return self.encodeToJson(dict)
     }
@@ -123,9 +123,9 @@ class CaptureSerializationUtils {
             analyzerSettings.keepMarginOnTransformedDocumentImage = keepMarginOnTransformedDocumentImage
         }
         if let lightingThresholds = captureAnalyzerSettingsDict["lightingThresholds"] as? Dictionary<String, Any>,
-            let tooDarkTreshold = lightingThresholds["tooDarkTreshold"] as? Double,
+            let tooDarkThreshold = lightingThresholds["tooDarkThreshold"] as? Double,
             let tooBrightThreshold = lightingThresholds["tooBrightThreshold"] as? Double  {
-                analyzerSettings.lightingThresholds = MBCCLightingThresholds(tooDarkTreshold: tooDarkTreshold, tooBrightThreshold: tooBrightThreshold)
+                analyzerSettings.lightingThresholds = MBCCLightingThresholds(tooDarkTreshold: tooDarkThreshold, tooBrightThreshold: tooBrightThreshold)
         }
         if let minimumDocumentDpi = captureAnalyzerSettingsDict["minimumDocumentDpi"] as? Int {
             analyzerSettings.minimumDocumentDpi = minimumDocumentDpi

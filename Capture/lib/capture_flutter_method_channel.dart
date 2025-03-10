@@ -9,7 +9,7 @@ import 'dart:convert';
 /// An implementation of [CaptureFlutterPlatform] that uses method channels.
 ///
 /// MethodChannelCaptureFlutter exposes the appropriate native Capture module as a Flutter/Dart module,
-/// based on detected platform: Android or iOS.
+/// based on the detected platform: Android or iOS.
 ///
 /// The method channel contains the function `scanWithCamera` which enables the Capture process with the default Analyzer & UX properties.
 class MethodChannelCaptureFlutter extends CaptureFlutterPlatform {
@@ -29,8 +29,8 @@ class MethodChannelCaptureFlutter extends CaptureFlutterPlatform {
   ///
   /// 1. Capture Settings: the class that contains all of the available settings for the Capture process. It contains settings for the Capture analyzer, UX and camera configuration settings.
   ///
-  /// 2. License key `string`: It should contain a base64 license key bound to application ID for Android or iOS.
-  /// To obtain valid license key, please visit https://developer.microblink.com/ or contact us directly at https://help.microblink.com
+  /// 2. License key `string`: It should contain a base64 license key bound to the Application ID for Android or Bundle ID for iOS.
+  /// To obtain a valid license key, please visit https://developer.microblink.com/ or contact us directly at https://help.microblink.com
   @override
   Future<AnalyzerResult?> scanWithCamera(
       CaptureSettings captureSettings, String license) async {
