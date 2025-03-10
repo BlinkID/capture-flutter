@@ -64,4 +64,8 @@ extension CaptureFlutterPlugin: MBICCaptureViewControllerDelegate {
             captureViewController.dismiss(animated: true)
         }
     }
+    
+    public func captureViewControllerDidClose(captureViewController: MBICCaptureViewController) {
+        result?(FlutterError(code: iosCaptureError, message: "Capture canceled", details: nil))
+    }
 }
