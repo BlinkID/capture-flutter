@@ -11,11 +11,11 @@ flutter create -a kotlin -i swift --org com.microblink $appName
 # enter into demo project folder
 pushd $appName
 
-IS_LOCAL_BUILD=true || exit 1
+IS_LOCAL_BUILD=false || exit 1
 if [ "$IS_LOCAL_BUILD" = true ]; then
   # add capture_flutter dependency with local path to pubspec.yaml
-  perl -i~ -pe "BEGIN{$/ = undef;} s/dependencies:\n  flutter:\n    sdk: flutter/dependencies:\n  flutter:\n    sdk: flutter\n  capture_flutter:\n    path: ..\/capture_flutter/" pubspec.yaml
-  echo "Using blinkid_flutter from this repo instead from flutter pub"
+  perl -i~ -pe "BEGIN{$/ = undef;} s/dependencies:\n  flutter:\n    sdk: flutter/dependencies:\n  flutter:\n    sdk: flutter\n  capture_flutter:\n    path: ..\/Capture/" pubspec.yaml
+  echo "Using capture_flutter from this repo instead from flutter pub"
 else
   # add capture_flutter dependency to pubspec.yaml
   perl -i~ -pe "BEGIN{$/ = undef;} s/dependencies:\n  flutter:\n    sdk: flutter/dependencies:\n  flutter:\n    sdk: flutter\n  capture_flutter/" pubspec.yaml
@@ -23,11 +23,6 @@ else
 fi
 
 flutter pub get
-
-# enter into android project folder
-pushd android
-
-popd
 
 # enter into ios project folder
 pushd ios
@@ -48,6 +43,6 @@ echo "Go to Flutter project folder: cd $appName"
 echo "To run on Android type: flutter run"
 echo "To run on iOS:
 1. Open $appName/ios/Runner.xcworkspace
-2. Set your development team
-3. Add the NSCameraUsageDescription & NSPhotoLibraryUsageDescription keys to the Runner/Info.plist file
+2. Set the Add the NSCameraUsageDescription key to the Runner/Info.plist file
+3. Set your development team
 4. Press run"
