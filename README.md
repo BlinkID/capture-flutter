@@ -9,7 +9,7 @@ The SDK provides you with a rectified image of the document, which ensures a hig
 
 The user is guided to avoid glare, blurred images, bad lighting conditions, fingers over the document, or too much tilt. The SDK recognizes if a document is single-sided (e.g., a passport) or double-sided (e.g., a driving license) and prompts the user to scan the back side of the document when needed.
 
-In the results, you can get a cropped, perspective-corrected image of the document, along with the original frame. Those can be processed by your app in any way required. The SDK is lightweight and can be easily integrated into your mobile app and bland in your design.
+In the results, you can get a cropped, perspective-corrected image of the document, along with the original frame. Those can be processed by your app in any way required. The SDK is lightweight and can be easily integrated into your mobile app and blend in your design.
 
 **For maximum performance and full access to all features, it’s best to go with one of our native SDKs (for [iOS](https://github.com/BlinkID/capture-ios) and [Android](https://github.com/BlinkID/capture-android)).**
 
@@ -115,12 +115,12 @@ var results = await capturePlugin.scanWithCamera(settings,licenseKey);
 
 if (results?.completenessStatus == CompletenessStatus.Complete) {
   // handle the obtained results
-  print(result?.documentGroup);
+  print(results?.documentGroup);
 }
 ```
 
 - The whole integration process can be found in the sample app `main.dart` file [here](https://github.com/BlinkID/capture-flutter/blob/main/sample_files/main.dart).
-- The settings results that can be used with the Capture plugin can be found in the paragrapahs below, but also in the comments of each result in the Dart files.
+- The settings results that can be used with the Capture plugin can be found in the paragraphs below, but also in the comments of each result in the Dart files.
 
 ## <a name="platform-specifics"></a> Platform specifics
 Plugin implementation is located in the `lib` folder, while platform-specific implementation is located in the `android` and `ios` folders.
@@ -134,13 +134,13 @@ The native implementation of the `CaptureSettings` can be found here:
 - iOS:
   - [Capture Settings](https://github.com/BlinkID/capture-flutter/blob/main/Capture/ios/Classes/CaptureSerializationUtils.swift#L72)
   - [Analyzer Settings](https://github.com/BlinkID/capture-flutter/blob/main/Capture/ios/Classes/CaptureSerializationUtils.swift#L88)
-  - [UX Settings](https://github.com/BlinkID/capture-flutter/blob/develop/Capture/ios/Classes/CaptureSerializationUtils.swift#L143)
+  - [UX Settings](https://github.com/BlinkID/capture-flutter/blob/main/Capture/ios/Classes/CaptureSerializationUtils.swift#L143)
   - [Camera Settings](https://github.com/BlinkID/capture-flutter/blob/main/Capture/ios/Classes/CaptureSerializationUtils.swift#L168)
 - Android:
-  - [Capture Settings](https://github.com/BlinkID/capture-flutter/blob/main/Capture/android/src/main/kotlin/com/microblink/capture_flutter/CaptureSerializationUtils.kt#L45)
-  - [Analyzer Settings](https://github.com/BlinkID/capture-flutter/blob/main/Capture/android/src/main/kotlin/com/microblink/capture_flutter/CaptureSerializationUtils.kt#L51)
-  - [UX Settings](https://github.com/BlinkID/capture-flutter/blob/main/Capture/android/src/main/kotlin/com/microblink/capture_flutter/CaptureSerializationUtils.kt#L70)
-  - [Camera Settings](https://github.com/BlinkID/capture-flutter/blob/develop/Capture/android/src/main/kotlin/com/microblink/capture_flutter/CaptureSerializationUtils.kt#L77)
+  - [Capture Settings](https://github.com/BlinkID/capture-flutter/blob/main/Capture/android/src/main/kotlin/com/microblink/capture/flutter/CaptureSerializationUtils.kt#L57)
+  - [Analyzer Settings](https://github.com/BlinkID/capture-flutter/blob/main/Capture/android/src/main/kotlin/com/microblink/capture/flutter/CaptureSerializationUtils.kt#L63)
+  - [UX Settings](https://github.com/BlinkID/capture-flutter/blob/main/Capture/android/src/main/kotlin/com/microblink/capture/flutter/CaptureSerializationUtils.kt#L110)
+  - [Camera Settings](https://github.com/BlinkID/capture-flutter/blob/main/Capture/android/src/main/kotlin/com/microblink/capture/flutter/CaptureSerializationUtils.kt#L121)
 
 For a more detailed explanation of the Capture Settings, go to the native documentation here for [iOS](https://blinkid.github.io/capture-ux-sp/documentation/captureux/mbiccapturesettings) and [Android](https://blinkid.github.io/capture-android/capture-ux/com.microblink.capture.settings/-capture-settings/index.html).
 
@@ -151,7 +151,7 @@ All of the results that can be obtained, along with the explanation of what each
 
 The native implementation of the `AnalyzerResult` can be found here:
 - [iOS](https://github.com/BlinkID/capture-flutter/blob/main/Capture/ios/Classes/CaptureSerializationUtils.swift#L11)
-- [Android](https://github.com/BlinkID/capture-flutter/blob/main/Capture/android/src/main/kotlin/com/microblink/capture_flutter/CaptureSerializationUtils.kt#L23)
+- [Android](https://github.com/BlinkID/capture-flutter/blob/main/Capture/android/src/main/kotlin/com/microblink/capture/flutter/CaptureSerializationUtils.kt#L23)
 
 For a more detailed explanation of the Analyzer Result, go to the native documentation here for [iOS](https://blinkid.github.io/capture-core-sp/documentation/capturecore/mbccanalyzerresult) and [Android](https://blinkid.github.io/capture-android/capture-core/com.microblink.capture.result/-analyzer-result/index.html?query=class%20AnalyzerResult).
 
