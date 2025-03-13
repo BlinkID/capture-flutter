@@ -65,7 +65,7 @@ class _MyAppState extends State<MyApp> {
       var results = await capturePlugin.scanWithCamera(settings, licenseKey);
 
       // get the results
-      if (results?.completnessStatus == CompletenessStatus.Complete) {
+      if (results?.completenessStatus == CompletenessStatus.Complete) {
         setState(() {
           resultString = getCaptureStringResult(results);
           firstCapturedImage = base64Decode(
@@ -112,7 +112,7 @@ class _MyAppState extends State<MyApp> {
 
   String getCaptureStringResult(AnalyzerResult? result) {
     return buildAnalyzerResult(
-          result?.completnessStatus,
+          result?.completenessStatus,
           "Completeness status",
         ) +
         buildAnalyzerResult(result?.documentGroup, "Document group") +
